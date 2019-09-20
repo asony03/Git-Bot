@@ -2,7 +2,7 @@
 
 **Problem Statement**
 
-Though github is a wonderful piece of software and very easy to use, there are a lot of tasks that users do repeatedly. For exmaple deleting a branch once it is merged. We want to make it much more simpler to the users by automating these redundant tasks and automate maintenance.
+Though github is a wonderful piece of software and very easy to use, there are a lot of tasks that users do repeatedly. For exmaple deleting a branch once it is merged. We want to make it much more simpler to the users by automating these redundant tasks.
 
 **Bot Description**
 
