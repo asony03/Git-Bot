@@ -21,30 +21,47 @@ Tag line: "Boost up your git"
 **Use Cases**
 
 Use case: Keep track of toxic comments in issues and pull reqs and report the user whent they cross a particular threshold.
-* Preconditions
+* Preconditions: 
   The bot needs to have access to the repository.
-* Main Flow
+* Main Flow: 
   Users comment on issues and pull requests. The bot monitors these comments for toxicity.
+* Subflows:
+  - [S1]. A user comments on issues and/or pull requests.
+  - [S2]. The bot analyzes these comments for toxicity.
+  - [S3]. If the comments are found to be toxic, the bot checks whether the user has crossed the threshold for toxicity.
+  - [S4]. If the user has crossed the threshold, the bot reports the user (along with the comments) via email.
+* Alternate Flows:
+  1. The bot identifies the comments as non toxic. 
+  2. The bot does nothing.
+
 
 Use case: Identify inaapropriate/offensive content in pull requests and issues body/title and tag them accordingly.
 * Preconditions
   The bot needs to have access to the repository.
 * Main Flow
   Pull requests or issues are raised with inappropriate or offensive content in them. The bot identifies it and tags it.
+* Subflows:
+  - [S1]. A user creates a pull request or issue with inappropriate or offensive content in the body/title.
+  - [S2]. The bot analyzes the content for toxicity.
+  - [S3]. If the content is found to be toxic, the bot flags the pull request/issue.
+* Alternate Flows:
+  1. The content is not found to be inappropriate.
+  2. The bot does nothing.
+
   
 Use case: Automaticaly label unlabelled issues against a set of predefined labels, such as bug, enhancement etc as and when they are raised.
-* Preconditions:
+* Preconditions: 
   - The bot needs to have access to the repository.
-* Main Flow:
+* Main Flow: 
   - An issue is raised without labels[S1]. The bot labels the issue as a bug, enhancement, feature etc [S2].
 * SubFlows:
   - [S1]. An issue is raised without labels. 
   - [S2]. The bot identifies the type of the issue and labels it as a bug, enhancement, feature etc.
 
 Use case: Automatically assign a priority level to the issue, such as requires immediate attention etc.
-* Preconditions:
+* Preconditions: 
   - The bot needs to have access to the repository.
-* Main Flow:
+* Main Flow: 
   - An issue will be raised [S1]. The bot uses NLP techniques and analyzes the context of the issue [S2] and assigns a priority level [S3].
 * Subflows:
   - [S1]. An issue will be raised. 
