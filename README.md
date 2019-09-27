@@ -33,14 +33,21 @@ Use case: Identify inaapropriate/offensive content in pull requests and issues b
   Pull requests or issues are raised with inappropriate or offensive content in them. The bot identifies it and tags it.
   
 Use case: Automaticaly label unlabelled issues against a set of predefined labels, such as bug, enhancement etc as and when they are raised.
-* Preconditions
+* Preconditions:
   The bot needs to have access to the repository.
-* Main Flow
-  An issue is raised without labels. The bot labels the issue as a bug, enhancement, feature etc.
+* Main Flow:
+  An issue is raised without labels[S1]. The bot labels the issue as a bug, enhancement, feature etc [S2].
+* SubFlows:
+  [S1]. An issue is raised without labels. 
+  [S2]. The bot identifies the type of the issue and labels it as a bug, enhancement, feature etc.
 
 Use case: Automatically assign a priority level to the issue, such as requires immediate attention etc.
-* Preconditions
+* Preconditions:
   The bot needs to have access to the repository.
-* Main Flow
-  An issue is raised. The bot uses NLP techniques to analyze the sentiment and assigns a priority level.
+* Main Flow:
+  An issue will be raised [S1]. The bot uses NLP techniques and analyzes the context of the issue [S2] and assigns a priority level [S3].
+* Subflows:
+  [S1]. An issue will be raised. 
+  [S2]. The bot uses NLP techniques to and analyzes the context of the issue
+  [S3]. Assign a priority level
 
