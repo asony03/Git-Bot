@@ -21,10 +21,10 @@ Tag line: "Boost up your git"
 **Use Cases**
 
 Use case: Keep track of toxic comments in issues and pull reqs and report the user whent they cross a particular threshold.
-* Preconditions: 
-  The bot needs to have access to the repository.
-* Main Flow: 
-  Users comment on issues and pull requests. The bot monitors these comments for toxicity.
+* Preconditions:
+  - The bot needs to have access to the repository.
+* Main Flow:
+  - Users comment on issues and pull requests. The bot monitors these comments for toxicity.
 * Subflows:
   - [S1]. A user comments on issues and/or pull requests.
   - [S2]. The bot analyzes these comments for toxicity.
@@ -36,10 +36,10 @@ Use case: Keep track of toxic comments in issues and pull reqs and report the us
 
 
 Use case: Identify inaapropriate/offensive content in pull requests and issues body/title and tag them accordingly.
-* Preconditions
-  The bot needs to have access to the repository.
-* Main Flow
-  Pull requests or issues are raised with inappropriate or offensive content in them. The bot identifies it and tags it.
+* Preconditions:
+  - The bot needs to have access to the repository.
+* Main Flow:
+  - Pull requests or issues are raised with inappropriate or offensive content in them. The bot identifies it and tags it.
 * Subflows:
   - [S1]. A user creates a pull request or issue with inappropriate or offensive content in the body/title.
   - [S2]. The bot analyzes the content for toxicity.
@@ -50,21 +50,72 @@ Use case: Identify inaapropriate/offensive content in pull requests and issues b
 
   
 Use case: Automaticaly label unlabelled issues against a set of predefined labels, such as bug, enhancement etc as and when they are raised.
-* Preconditions: 
+* Preconditions:
   - The bot needs to have access to the repository.
-* Main Flow: 
+* Main Flow:
   - An issue is raised without labels[S1]. The bot labels the issue as a bug, enhancement, feature etc [S2].
 * SubFlows:
   - [S1]. An issue is raised without labels. 
   - [S2]. The bot identifies the type of the issue and labels it as a bug, enhancement, feature etc.
 
 Use case: Automatically assign a priority level to the issue, such as requires immediate attention etc.
-* Preconditions: 
+* Preconditions:
   - The bot needs to have access to the repository.
-* Main Flow: 
+* Main Flow:
   - An issue will be raised [S1]. The bot uses NLP techniques and analyzes the context of the issue [S2] and assigns a priority level [S3].
 * Subflows:
   - [S1]. An issue will be raised. 
   - [S2]. The bot uses NLP techniques to and analyzes the context of the issue
   - [S3]. Assign a priority level
+  
+**Design Sketches**
+
+Storyboards:
+
+![Sb1](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Story%20Board%201.PNG)
+
+![Sb2](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Story%20Board%202.PNG)
+
+![Sb3](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Story%20Board%203.PNG)
+
+![Sb4](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Story%20Board%204.PNG)
+
+Wireframes:
+
+Our bot mainly works in the background and shows output on the Git UI itself. However, we are attaching two images which shows how the email would look like and a sample of how an output on the GIT UI for a inappropriate issue would look like respectively.
+
+![W1](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/email%20wireframe.png)
+
+![W2](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/label%20wireframe.PNG)
+
+**Architecture Design and Design patterns**
+
+![Arch Dagram](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/arch_diagram.png)
+
+
+This is an event-driven architecture as it consists of event producers that generate a stream of events and event consumers that listen for the events.
+
+![event_driven](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Event%20driven%20architecture.PNG)
+
+In our case, Events are triggered by Git, and the bt gets notified. Event handler module of our bot would consume these events as they occur and trigger some actions or perform some activities based on the type of event received. Producers are decoupled from consumers and this would go hand-in-hand with observer pattern.
+
+Publishers + Subscribers = Observer Pattern:
+
+The observer pattern is a software design pattern in which an object, called the subject (git repo in our case), maintains a list of its dependents, called observers, and notifies them automatically of any state changes.
+
+![observer pattern](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Observer%20pattern.png)
+
+Observer pattern and Facade pattern in action:
+
+Facade pattern hides the complexities of the system and provides an interface to the client using which the client can access the sub systems. 
+This pattern adds an interface to existing system to hide its complexities.
+This pattern involves a single entry point which provides simplified methods required by client and delegates calls to sub systems.
+
+![facade](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/facade%20patter.jpg)
+
+
+
+
+  
+
 
