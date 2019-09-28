@@ -2,21 +2,21 @@
 
 **Problem Statement:**
 
-Github is a wonderful piece of software and very easy to use, however there are some concerns not solved by git out of the box. We have identified and outlined the following problems and plan on solving them.
+Github is a wonderful piece of software and very easy to use. However, there are some concerns not solved by git out of the box. We have identified and outlined the following problems and plan on solving them as explained in the subsequent sections.
 
-* Git doesn't know its users and there is no way to moderate the comments made by them. Often times, mainly in the case of large open source projects, there might be toxic contributors and there is no way to track them. Therefore, there is a need to identify and control toxic content.
-* Labels are very useful when it comes to managing and prioritzing issues. Currently git doesn't offer a way to automatically asssign labels. In the case of large project with hundreds of issues, there would be definitely a need to identify the nature of the issues and label and categorize them accordingly.
+* Git doesn't know its users and there is no way to moderate the comments made by them. Often times, mainly in the case of large open source projects, incidents of comment sections being misused are increasing and there is no way to track them. Therefore, there is a pressing need to monitor and control inappropriate content posted by users.
+* Labels are very useful when it comes to managing and prioritzing Git issues. Currently, git doesn't offer a way to automatically asssign labels. In the case of large projects with hundreds of issues, there would definitely be a need to identify the nature of the issues and label/categorize them accordingly. If the issues are labelled correctly, it would provide for effective prioritization, delegation and visibility.
 
 <br />
 
 **Bot Description:**
 
 Our bot tries to do the following to address these problems:
-* Listens to comments on repos in which the bot is installed. When a new user comments, the bot fetches public comments of this user and run sentiment analyser on them and then based on the results, the bot concludes whether that user is of hostile background and an issue is opened for this user in maintainers-discussion private repo so that the maintainers can review these toxic comments.
-* Scans the content of pull requests and issues in a timely manner and censor/mark them appropriately.
-* Use NLP techniques to label issues based on the nature of its title and body against a set of predefined labels. Based on the sentiments, it also assigns a priority level to the issue.
+* Monitors the comments on a repository: When a user comments, the bot runs sentiment analysis on the content and then based on the results, the bot decides whether that content is inappropriate or not. If it is found to be inappropriate and that user crosessed his or her threshold, an email is send to the maintainer/admin of the repository with a report of the user's comments.
+* Monitors the content of Issues and Pull Requests: Scans the content of Pull requests and Issues as an when they are created and tags them appropriately.
+* Automatic labelling of Issues: Uses NLP techniques to label issues based on its content against a set of predefined labels. Further, based on the sentiments, it also assigns a priority level to the issue.
 
-A bot is a good solution for this because the tasks that we deal with are repetitive and need to run constantly in the background. Our bot does these tasks by listening to respective github events. Also, this bot has the characteristics of a AI bot as this bot does automated learning and data analysis.
+A bot is a good solution for this because the tasks that we deal with are repetitive and need to run constantly in the background. Our bot does these tasks by listening to their respective github events. Also, this bot has the characteristics of an AI bot as this involves automated learning and data analysis.
 
   **Tag line: "Boost up your git"**
 
@@ -106,7 +106,7 @@ This is an event-driven architecture as it consists of event producers that gene
 
 ![event_driven](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Event%20driven%20architecture.PNG)
 
-In our case, Events are triggered by Git, and the bt gets notified. Event handler module of our bot would consume these events as they occur and trigger some actions or perform some activities based on the type of event received. Producers are decoupled from consumers and this would go hand-in-hand with observer pattern.
+In our case, Events are triggered by Git, and the Bot gets notified. Event handlers of our bot would consume these events as they occur and trigger some actions or perform necessary activities based on the event. Producers are decoupled from consumers and would go hand-in-hand with the observer pattern.
 
 * **Publishers + Subscribers = Observer Pattern:**
 
@@ -116,9 +116,7 @@ The observer pattern is a software design pattern in which an object, called the
 
 * **Observer pattern and Facade pattern in action:**
 
-Facade pattern hides the complexities of the system and provides an interface to the client using which the client can access the sub systems. 
-This pattern adds an interface to existing system to hide its complexities.
-This pattern involves a single entry point which provides simplified methods required by client and delegates calls to sub systems.
+Facade pattern hides the complexities of the system and provides an interface to the client using which the client can access the sub systems. This pattern adds an interface to existing system to hide its complexities. It also involves a single entry point which provides simplified methods required by client and delegates calls to the respective handlers.
 
 ![facade](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/facade%20patter.jpg)
 
