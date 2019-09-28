@@ -1,5 +1,14 @@
 # CSC510-24
 
+**Team Details:**
+
+Name | Unity
+------------ | -------------
+Amal Sony | asony
+Harsh Agrawal | hagrawa2
+Sharique Khan | mkhan8
+Siddu Madhure Jayanna | smadhur
+
 **Problem Statement:**
 
 Github is a wonderful piece of software and very easy to use. However, there are some concerns not solved by git out of the box. We have identified and outlined the following problems and plan on solving them as explained in the subsequent sections.
