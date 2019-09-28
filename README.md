@@ -8,7 +8,7 @@ Github is a wonderful piece of software and very easy to use, however there are 
 * Labels are very useful when it comes to managing and prioritzing issues. Currently git doesn't offer a way to automatically asssign labels. In the case of large project with hundreds of issues, there would be definitely a need to identify the nature of the issues and label and categorize them accordingly.
 
 <br />
-<br />
+
 **Bot Description:**
 
 Our bot tries to do the following to address these problems:
@@ -21,7 +21,7 @@ A bot is a good solution for this because the tasks that we deal with are repeti
   **Tag line: "Boost up your git"**
 
 <br />
-<br />
+
 **Use Cases:**
 
 Use case: Keep track of toxic comments in issues and pull reqs and report the user whent they cross a particular threshold.
@@ -73,10 +73,10 @@ Use case: Automatically assign a priority level to the issue, such as requires i
   - [S3]. Assign a priority level
  
 <br />
-<br />
-**Design Sketches**
 
-* **Storyboards:**
+**Design Sketches:**
+
+1. **Storyboards:**
 
 ![Sb1](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Story%20Board%201.PNG)
 
@@ -86,19 +86,16 @@ Use case: Automatically assign a priority level to the issue, such as requires i
 
 ![Sb4](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Story%20Board%204.PNG)
 
-* **Wireframes:**
+2. **Wireframes:** Our bot mainly works in the background and shows output on the Git UI itself. However, we are attaching two images which shows how the email would look like and a sample of how an output on the GIT UI for a inappropriate issue would look like respectively.
 
-Our bot mainly works in the background and shows output on the Git UI itself. However, we are attaching two images which shows how the email would look like and a sample of how an output on the GIT UI for a inappropriate issue would look like respectively.
-
-* Email wireframe:
+ - Email wireframe:
 
 ![W1](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/email%20wireframe.png)
 
-* Label wireframe:
+ - Label wireframe:
 
 ![W2](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/label%20wireframe.PNG)
 
-<br />
 <br />
 
 **Architecture Design and Design Patterns:**
