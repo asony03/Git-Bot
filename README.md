@@ -1,6 +1,6 @@
 # CSC510-24
 
-**Team Details:**
+## Team Details:
 
 Name | Unity
 ------------ | -------------
@@ -9,16 +9,16 @@ Harsh Agrawal | hagrawa2
 Sharique Khan | mkhan8
 Siddu Madhure Jayanna | smadhur
 
-**Problem Statement:**
+## Problem Statement:
 
-Github is a wonderful piece of software and very easy to use. However, there are some concerns not solved by git out of the box. We have identified and outlined the following problems and plan on solving them as explained in the subsequent sections.
+Github is a wonderful piece of software and very easy to use. However, there are some concerns not solved by Github out of the box. We have identified and outlined the following problems and plan on solving them as explained in the subsequent sections.
 
-* Git doesn't know its users and there is no way to moderate the comments made by them. Often times, mainly in the case of large open source projects, incidents of comment sections being misused are increasing and there is no way to track them. Therefore, there is a pressing need to monitor and control inappropriate content posted by users.
-* Labels are very useful when it comes to managing and prioritzing Git issues. Currently, git doesn't offer a way to automatically asssign labels. In the case of large projects with hundreds of issues, there would definitely be a need to identify the nature of the issues and label/categorize them accordingly. If the issues are labelled correctly, it would provide for effective prioritization, delegation and visibility.
+* Github doesn't know its users and there is no way to moderate the comments made by them. Often times, mainly in the case of large open source projects, incidents of comment sections being misused are increasing and there is no way to track them. Therefore, there is a pressing need to monitor and control inappropriate content posted by users.
+* Labels are very useful when it comes to managing and prioritzing Github issues. Currently, Github doesn't offer a way to automatically asssign labels. In the case of large projects with hundreds of issues, there would definitely be a need to identify the nature of the issues and label/categorize them accordingly. If the issues are labelled correctly, it would provide for effective prioritization, delegation and visibility.
 
 <br />
 
-**Bot Description:**
+## Bot Description:
 
 Our bot tries to do the following to address these problems:
 * Monitors the comments on a repository: When a user comments, the bot runs sentiment analysis on the content and then based on the results, the bot decides whether that content is inappropriate or not. If it is found to be inappropriate and that user crosessed his or her threshold, an email is send to the maintainer/admin of the repository with a report of the user's comments.
@@ -31,9 +31,10 @@ A bot is a good solution for this because the tasks that we deal with are repeti
 
 <br />
 
-**Use Cases:**
+## Use Cases:
 
-Use case: Keep track of toxic comments in issues and pull reqs and report the user whent they cross a particular threshold.
+```
+Use case: Keep track of toxic comments in issues and pull reqs and report the user when they cross a particular threshold.
 * Preconditions:
   - The bot needs to have access to the repository.
 * Main Flow:
@@ -46,8 +47,8 @@ Use case: Keep track of toxic comments in issues and pull reqs and report the us
 * Alternate Flows:
   - [AF1]. The bot identifies the comments as non toxic. 
   - [AF2]. The bot does nothing.
-
-
+```
+```
 Use case: Identify inaapropriate/offensive content in pull requests and issues body/title and tag them accordingly.
 * Preconditions:
   - The bot needs to have access to the repository.
@@ -60,8 +61,8 @@ Use case: Identify inaapropriate/offensive content in pull requests and issues b
 * Alternate Flows:
   - [AF1]. The content is not found to be inappropriate.
   - [AF2]. The bot does nothing.
-
-  
+```
+``` 
 Use case: Automaticaly label unlabelled issues against a set of predefined labels, such as bug, enhancement etc as and when they are raised.
 * Preconditions:
   - The bot needs to have access to the repository.
@@ -70,7 +71,8 @@ Use case: Automaticaly label unlabelled issues against a set of predefined label
 * SubFlows:
   - [S1]. An issue is raised without labels. 
   - [S2]. The bot identifies the type of the issue and labels it as a bug, enhancement, feature etc.
-
+```
+```
 Use case: Automatically assign a priority level to the issue, such as requires immediate attention etc.
 * Preconditions:
   - The bot needs to have access to the repository.
@@ -80,12 +82,12 @@ Use case: Automatically assign a priority level to the issue, such as requires i
   - [S1]. An issue will be raised. 
   - [S2]. The bot uses NLP techniques to and analyzes the context of the issue
   - [S3]. Assign a priority level
- 
+``` 
 <br />
 
-**Design Sketches:**
+## Design Sketches:
 
-1. **Storyboards:**
+### 1. Storyboards
 
 ![Sb1](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Story%20Board%201.PNG)
 
@@ -95,7 +97,9 @@ Use case: Automatically assign a priority level to the issue, such as requires i
 
 ![Sb4](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Story%20Board%204.PNG)
 
-2. **Wireframes:** Our bot mainly works in the background and shows output on the Git UI itself. However, we are attaching two images which shows how the email would look like and a sample of how an output on the GIT UI for a inappropriate issue would look like respectively.
+### 2. Wireframes 
+
+Our bot mainly works in the background and shows output on the Git UI itself. However, we are attaching two images which shows how the email would look like and a sample of how an output on the GIT UI for a inappropriate issue would look like respectively.
 
  - Email wireframe:
 
@@ -107,7 +111,8 @@ Use case: Automatically assign a priority level to the issue, such as requires i
 
 <br />
 
-**Architecture Design and Design Patterns:**
+## Architecture Design and Design Patterns
+
 ![Arch Dagram](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/arch_diagram.png)
 
 
@@ -117,13 +122,13 @@ This is an event-driven architecture as it consists of event producers that gene
 
 In our case, Events are triggered by Git, and the Bot gets notified. Event handlers of our bot would consume these events as they occur and trigger some actions or perform necessary activities based on the event. Producers are decoupled from consumers and would go hand-in-hand with the observer pattern.
 
-* **Publishers + Subscribers = Observer Pattern:**
+### * Publishers + Subscribers = Observer Pattern:
 
 The observer pattern is a software design pattern in which an object, called the subject (git repo in our case), maintains a list of its dependents, called observers, and notifies them automatically of any state changes.
 
 ![observer pattern](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Observer%20pattern.png)
 
-* **Observer pattern and Facade pattern in action:**
+### * Observer pattern and Facade pattern in action:
 
 Facade pattern hides the complexities of the system and provides an interface to the client using which the client can access the sub systems. This pattern adds an interface to existing system to hide its complexities. It also involves a single entry point which provides simplified methods required by client and delegates calls to the respective handlers.
 
