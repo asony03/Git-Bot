@@ -122,13 +122,13 @@ This is an event-driven architecture as it consists of event producers that gene
 
 In our case, Events are triggered by Git, and the Bot gets notified. Event handlers of our bot would consume these events as they occur and trigger some actions or perform necessary activities based on the event. Producers are decoupled from consumers and would go hand-in-hand with the observer pattern.
 
-### * Publishers + Subscribers = Observer Pattern:
+### - Publishers + Subscribers = Observer Pattern:
 
 The observer pattern is a software design pattern in which an object, called the subject (git repo in our case), maintains a list of its dependents, called observers, and notifies them automatically of any state changes.
 
 ![observer pattern](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Observer%20pattern.png)
 
-### * Observer pattern and Facade pattern in action:
+### - Observer pattern and Facade pattern in action:
 
 Facade pattern hides the complexities of the system and provides an interface to the client using which the client can access the sub systems. This pattern adds an interface to existing system to hide its complexities. It also involves a single entry point which provides simplified methods required by client and delegates calls to the respective handlers.
 
