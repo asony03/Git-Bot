@@ -101,11 +101,11 @@ Use case: Automatically assign a priority level to the issue, such as requires i
 
 Our bot mainly works in the background and shows output on the Git UI itself. However, we are attaching two images which shows how the email would look like and a sample of how an output on the GIT UI for a inappropriate issue would look like respectively.
 
- - Email wireframe:
+ #### Email wireframe:
 
 ![W1](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/email%20wireframe.png)
 
- - Label wireframe:
+ #### Label wireframe:
 
 ![W2](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/label%20wireframe.PNG)
 
