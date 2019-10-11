@@ -1,7 +1,7 @@
 # CSC510-24 Gitbot
 
 <p align="center">
-<img alt="logo" width="100" height="100" src="https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/logo.png">
+<img alt="logo" width="200" height="200" src="https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/logo.png">
 </p>
 
 ## Team Details:
