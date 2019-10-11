@@ -1,4 +1,8 @@
-# CSC510-24
+# CSC510-24 Gitbot
+
+<p align="center">
+<img alt="logo" src="https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/logo.png">
+</p>
 
 ## Team Details:
 
