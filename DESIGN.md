@@ -110,7 +110,7 @@ Our bot works in the background and creates labels/comments in github. Bot also 
 
 ### Components
 
-- **Github** : We are using Github's platform to integrate our bot with. Bot will read the data using Github API's for issues and comments and process the data accordingly. It will create labels in issues and delete the irrelevant issues and notify the admin using emails.
+- **Github** : We are using Github's platform to integrate our bot with. Bot will read the data using Github API's for issues and comments and process the data accordingly. It will assign labels for issues and pull requests and notifies admin about the  toxic behavior of users.
 
 - **Server** : This is a Node.js server which will listen to the incoming events and perform actions. It will communicate with AWS services which will provide the ML functonalities
 
@@ -131,7 +131,7 @@ In our case, Events are triggered by Github, and the bot gets notified. Event ha
 
 ### Publishers + Subscribers = Observer Pattern:
 
-The observer pattern is a software design pattern in which an object, called the subject (git repo in our case), maintains a list of its dependents, called observers, and notifies them automatically of any state changes.
+The observer pattern is a software design pattern in which an object, called the subject (git repo in our case), maintains a list of its dependents, called observers (listeners for issues, PRs and comments in our case), and notifies them automatically of any state changes.
 
 <p align="center">
 <img alt="logo" src="https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Observer%20pattern.png">
@@ -139,7 +139,7 @@ The observer pattern is a software design pattern in which an object, called the
 
 ### Observer pattern and Facade pattern in action:
 
-Facade pattern hides the complexities of the system and provides an interface to the client using which the client can access the sub systems. This pattern adds an interface to existing system to hide its complexities. It also involves a single entry point which provides simplified methods required by client and delegates calls to the respective handlers.
+Facade pattern hides the complexities of the system and provides an interface to the client using which the client can access the sub systems. In our system, thie dispatcher adds an interface to existing system to hide the complexities of its sub systems. Dispatcher is responsible for providing a single entry point with simplified methods required by clients, and delegates these calls to the respective handlers.
 
 <p align="center">
 <img alt="logo" src="https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/facade%20patter.jpg">
