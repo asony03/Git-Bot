@@ -123,6 +123,19 @@ Our bot works in the background and creates labels/comments in github. Bot also 
 
 ![Arch Dagram](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/arch_diagram.png)
 
+### Components
+
+- **Github** : We are using Guthub's platform to integrate our bot with. Bot will read the data using Github API's for issues and comments and process the data accordingly. It will create labels in issues and delete the irrelevant issues and notify the admin using emails.
+
+- **Server** : This is a Node.js server which will listen to the incoming events and perform actions. It will communicate with AWS services which will provide the ML functonalities
+
+- **Database** : This is a MySQL database hosted in AWS, preferably AWS Aurora to store each users comments and their labels, This will help us determine when the user has reached his/her threshold of toxic/in-approprite comments. 
+
+- **ML Services** : We are planning to have 2 instances for performing our tasks. One is toxicity detection model, which will be deployed on AWS Sagemaker. We will send the comment's text to this and get insights. Another one will be a label detection service, preferably using AWS comprehend, which will determine the most suitable label for an issue or a comment. 
+
+- **Email Server** : We will setup email server in our Node.js server as a service which will be used to send emails to the maintainers/ repo admins.
+
+
 This is an event-driven architecture as it consists of event producers that generate a stream of events and event consumers that listen for the events.
 
 <p align="center">
