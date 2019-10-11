@@ -11,21 +11,25 @@ Siddu Madhure Jayanna | smadhur
 
 ## Problem Statement:
 
-Github is a wonderful piece of software and very easy to use. However, there are some concerns not solved by Github out of the box. We have identified and outlined the following problems and plan on solving them as explained in the subsequent sections.
+Github is one of the most popular source control and project management website in the world. However, there are some concerns not solved by Github out of the box. We have identified and outlined such problems and plan on solving them as explained in the subsequent sections.
 
-* Github doesn't know its users and there is no way to moderate the comments made by them. Often times, mainly in the case of large open source projects, incidents of comment sections being misused are increasing and there is no way to track them. Therefore, there is a pressing need to monitor and control inappropriate content posted by users.
-* Labels are very useful when it comes to managing and prioritzing Github issues. Currently, Github doesn't offer a way to automatically asssign labels. In the case of large projects with hundreds of issues, there would definitely be a need to identify the nature of the issues and label/categorize them accordingly. If the issues are labelled correctly, it would provide for effective prioritization, delegation and visibility.
+* Currently there is no way to automatically moderate user comments. In case of large open source projects, incidents of comment sections being misused for other form of communications have increased, which has led to more individual time being spent in moderating such repositories. There is a pressing need to monitor and control inappropriate content posted by users.
+
+* Labels are very useful when it comes to managing and prioritzing Github issues. In the case of large open source projects with hundreds of new issues pouring in daily, there is a need to identify the nature/severity of the issues and label/categorize them accordingly. This will provide for effective prioritization, delegation and visibility.
 
 <br />
 
 ## Bot Description:
 
-Our bot tries to do the following to address these problems:
-* Monitors the comments on a repository: When a user comments, the bot runs sentiment analysis on the content and then based on the results, the bot decides whether that content is inappropriate or not. If it is found to be inappropriate and that user crosessed his or her threshold, an email is send to the maintainer/admin of the repository with a report of the user's comments.
-* Monitors the content of Issues and Pull Requests: Scans the content of Pull requests and Issues as an when they are created and tags them appropriately.
-* Automatic labelling of Issues: Uses NLP techniques to label issues based on its content against a set of predefined labels. Further, based on the sentiments, it also assigns a priority level to the issue.
+Our bot tackles these problems in following ways:
 
-A bot is a good solution for this because the tasks that we deal with are repetitive and need to run constantly in the background. Our bot does these tasks by listening to their respective github events. Also, this bot has the characteristics of an AI bot as this involves automated learning and data analysis.
+* Monitors the incoming comments on a repository: When a user writes a comment, the bot runs sentiment analysis on it and decides whether that comment is toxic or inappropriate. If it is found to be inappropriate and that user crosses his/her threshold, an email is sent to the admin of the repo with a report of the user's comments.
+
+* Monitors the content of Issues and PRs: Scans the content of Pull requests and Issues as an when they are created and tags them appropriately.
+
+* Automatic labelling of Issues: Uses ML to best classify/label issues based on their content against a set of predefined labels. Further, based on the keywords, it tries to assigns a best suited priority level to the issue.
+
+A bot reduces human intervention in these cases and avoids repetitive work needed by the repo admin. Our bot performs these tasks by listening to respective github events. Also, this bot has the characteristics of an AI bot as this involves automated learning and data analysis.
 
   **Tag line: "Boost up your git"**
 
@@ -34,7 +38,7 @@ A bot is a good solution for this because the tasks that we deal with are repeti
 ## Use Cases:
 
 ```
-Use case: Keep track of toxic comments in issues and pull reqs and report the user when they cross a particular threshold.
+Use case: Keep track of toxic comments in issues and PRs and report the user when they cross a particular threshold.
 * Preconditions:
   - The bot needs to have access to the repository.
 * Main Flow:
@@ -99,7 +103,7 @@ Use case: Automatically assign a priority level to the issue, such as requires i
 
 ### 2. Wireframes 
 
-Our bot mainly works in the background and shows output on the Git UI itself. However, we are attaching two images which shows how the email would look like and a sample of how an output on the GIT UI for a inappropriate issue would look like respectively.
+Our bot works in the background and creates labels/comments in github. Bot also sends email to the maintainers and both of these scenarios are presented below.
 
  #### Email wireframe:
 
@@ -115,12 +119,11 @@ Our bot mainly works in the background and shows output on the Git UI itself. Ho
 
 ![Arch Dagram](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/arch_diagram.png)
 
-
 This is an event-driven architecture as it consists of event producers that generate a stream of events and event consumers that listen for the events.
 
 ![event_driven](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Event%20driven%20architecture.PNG)
 
-In our case, Events are triggered by Git, and the Bot gets notified. Event handlers of our bot would consume these events as they occur and trigger some actions or perform necessary activities based on the event. Producers are decoupled from consumers and would go hand-in-hand with the observer pattern.
+In our case, Events are triggered by Github, and the bot gets notified. Event handlers of our bot would consume these events as they occur and trigger some actions or perform necessary activities based on the event. Producers are decoupled from consumers and would go hand-in-hand with the observer pattern.
 
 ### Publishers + Subscribers = Observer Pattern:
 
