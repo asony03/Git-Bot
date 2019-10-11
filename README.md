@@ -13,6 +13,7 @@ Harsh Agrawal | hagrawa2
 Sharique Khan | mkhan8
 Siddu Madhure Jayanna | smadhur
 
+## Milestones:
 
 Design Milestone: [Design.md](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/DESIGN.md)
 
