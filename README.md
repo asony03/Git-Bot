@@ -125,7 +125,9 @@ Our bot works in the background and creates labels/comments in github. Bot also 
 
 This is an event-driven architecture as it consists of event producers that generate a stream of events and event consumers that listen for the events.
 
-![event_driven](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Event%20driven%20architecture.PNG)
+<p align="center">
+<img alt="logo" src="https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Event%20driven%20architecture.PNG">
+</p>
 
 In our case, Events are triggered by Github, and the bot gets notified. Event handlers of our bot would consume these events as they occur and trigger some actions or perform necessary activities based on the event. Producers are decoupled from consumers and would go hand-in-hand with the observer pattern.
 
@@ -133,13 +135,17 @@ In our case, Events are triggered by Github, and the bot gets notified. Event ha
 
 The observer pattern is a software design pattern in which an object, called the subject (git repo in our case), maintains a list of its dependents, called observers, and notifies them automatically of any state changes.
 
-![observer pattern](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Observer%20pattern.png)
+<p align="center">
+<img alt="logo" src="https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Observer%20pattern.png">
+</p>
 
 ### Observer pattern and Facade pattern in action:
 
 Facade pattern hides the complexities of the system and provides an interface to the client using which the client can access the sub systems. This pattern adds an interface to existing system to hide its complexities. It also involves a single entry point which provides simplified methods required by client and delegates calls to the respective handlers.
 
-![facade](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/facade%20patter.jpg)
+<p align="center">
+<img alt="logo" src="https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/facade%20patter.jpg">
+</p>
 
 
 
