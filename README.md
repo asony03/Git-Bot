@@ -125,7 +125,7 @@ Our bot works in the background and creates labels/comments in github. Bot also 
 
 ### Components
 
-- **Github** : We are using Guthub's platform to integrate our bot with. Bot will read the data using Github API's for issues and comments and process the data accordingly. It will create labels in issues and delete the irrelevant issues and notify the admin using emails.
+- **Github** : We are using Github's platform to integrate our bot with. Bot will read the data using Github API's for issues and comments and process the data accordingly. It will create labels in issues and delete the irrelevant issues and notify the admin using emails.
 
 - **Server** : This is a Node.js server which will listen to the incoming events and perform actions. It will communicate with AWS services which will provide the ML functonalities
 
