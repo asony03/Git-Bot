@@ -1,0 +1,24 @@
+{
+  "name": "gitbot",
+  "version": "1.0.0",
+  "description": "<p align=\"center\"> <img alt=\"logo\" width=\"200\" height=\"200\" src=\"https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/logo.png\"> </p>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.ncsu.edu/csc510-fall2019/CSC510-24"
+  },
+  "author": "hagrawa2, mkhan8, smadhur, asony",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
+  }
+}
