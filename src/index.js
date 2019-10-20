@@ -1,10 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const events = require('events');
-const { rawBodySaver, verifySignature } = require('./helpers');
-const { issueComment } = require('./eventHandlers');
+const Octokit = require("@octokit/rest");
 
+// Load the Enviroment variables.
 require('dotenv').config();
+
+const { rawBodySaver, verifySignature } = require('./helpers');
+const { issueCommentHandler, issuesHandler } = require('./eventHandlers');
+
+const octokit = new Octokit({
+  auth: process.env.GITHUB_BOT_TOKEN,
+});
 
 console.log('Environment Variables loaded :', process.env.ENV_LOADED || 'FALSE');
 
@@ -37,6 +44,8 @@ app.post('/webhook', (req, res) => {
   res.status(200).send();
 });
 
-eventHandler.on('issue_comment', issueComment);
+eventHandler.on('issue_comment', issueCommentHandler);
+eventHandler.on('issues', issuesHandler);
+// eventHandler.on('issues', issuesHandler);
 
 app.listen(port, () => console.log('Gitbot running on port 3000'));
