@@ -6,7 +6,12 @@ const events = require('events');
 require('dotenv').config();
 
 const { rawBodySaver, verifySignature } = require('./helpers');
-const { issueCommentHandler, issuesHandler, deleteCommentHandler } = require('./eventHandlers');
+const {
+  issueCommentHandler,
+  issuesHandler,
+  deleteCommentHandler,
+  prHandler,
+} = require('./eventHandlers');
 
 console.log('Environment Variables loaded :', process.env.ENV_LOADED || 'FALSE');
 
@@ -54,9 +59,12 @@ app.post('/slack', (req, res) => {
   eventHandler.emit(event, emitData);
 });
 
+// Github Events
 eventHandler.on('issue_comment', issueCommentHandler);
 eventHandler.on('issues', issuesHandler);
+eventHandler.on('pull_request', prHandler);
+
+// Slack Events
 eventHandler.on('delete_comment', deleteCommentHandler);
-// eventHandler.on('issues', issuesHandler);
 
 app.listen(port, () => console.log('Gitbot running on port 3000'));

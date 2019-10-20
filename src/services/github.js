@@ -18,3 +18,10 @@ exports.deleteComment = (payload) => {
     ...obj,
   });
 };
+
+exports.addPRLabel = (payload) => octokit.issues.addLabels({
+  owner: payload.repository.owner.login,
+  repo: payload.repository.name,
+  issue_number: payload.pull_request.number,
+  labels: ['bug'],
+});

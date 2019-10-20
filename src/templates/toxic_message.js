@@ -13,7 +13,7 @@ module.exports = (obj) => {
       type: 'section',
       fields: [{
         type: 'mrkdwn',
-        text: `*Issue:*\n*<${obj.issue.url}|${obj.issue.title}>*`,
+        text: `*Issue:*\n*<${obj.issue.html_url}|${obj.issue.title}>*`,
       },
       {
         type: 'mrkdwn',

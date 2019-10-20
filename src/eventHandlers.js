@@ -1,5 +1,5 @@
 const { sendIssueToSlack, respondToDelete } = require('./services/slack');
-const { addIssueLabel, deleteComment } = require('./services/github');
+const { addIssueLabel, deleteComment, addPRLabel } = require('./services/github');
 
 exports.issueCommentHandler = (event) => {
   // Only handle the created event, reject others.
@@ -22,5 +22,11 @@ exports.deleteCommentHandler = (event) => {
   (async () => {
     await deleteComment(event.payload);
     await respondToDelete(event);
+  })();
+};
+
+exports.prHandler = (event) => {
+  (async () => {
+    await addPRLabel(event.payload);
   })();
 };
