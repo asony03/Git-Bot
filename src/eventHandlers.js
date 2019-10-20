@@ -1,29 +1,26 @@
-const Octokit = require("@octokit/rest");
-
-const octokit = new Octokit({
-  auth: process.env.GITHUB_BOT_TOKEN,
-});
-
-const { sendSlackMessage } = require('./slack');
+const { sendIssueToSlack, respondToDelete } = require('./services/slack');
+const { addIssueLabel, deleteComment } = require('./services/github');
 
 exports.issueCommentHandler = (event) => {
   // Only handle the created event, reject others.
-  if (!event.action === 'created') {
-    return;
-  }
+  if (event.payload.action !== 'created') return;
 
   (async () => {
-    await sendSlackMessage(event.payload);
+    await sendIssueToSlack(event.payload);
   })();
 };
 
 exports.issuesHandler = (event) => {
-  if (!event.payload.action === 'opened') return;
+  if (event.payload.action !== 'opened') return;
 
-  octokit.issues.addLabels({
-    owner: event.payload.repository.owner.login,
-    repo: event.payload.repository.name,
-    issue_number: event.payload.issue.number,
-    labels: ["bug", "enhancement"],
-  });
+  (async () => {
+    await addIssueLabel(event.payload);
+  })();
+};
+
+exports.deleteCommentHandler = (event) => {
+  (async () => {
+    await deleteComment(event.payload);
+    await respondToDelete(event);
+  })();
 };

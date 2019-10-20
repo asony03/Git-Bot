@@ -35,7 +35,12 @@ module.exports = (obj) => {
           text: 'Delete Comment',
         },
         style: 'danger',
-        value: 'click_me_123',
+        value: JSON.stringify({
+          event: 'delete_comment',
+          owner: obj.repository.owner.login,
+          repo: obj.repository.name,
+          comment_id: obj.comment.id,
+        }),
       }],
     },
     ],
