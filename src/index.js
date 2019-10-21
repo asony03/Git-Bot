@@ -18,7 +18,7 @@ console.log('Environment Variables loaded :', process.env.ENV_LOADED || 'FALSE')
 const app = express();
 const port = 3000;
 
-const eventHandler = new events.EventEmitter();
+const eventEmitter = new events.EventEmitter();
 
 app.use(bodyParser.urlencoded({
   extended: false,
@@ -40,7 +40,7 @@ app.post('/webhook', (req, res) => {
     host: req.headers.host,
     url: req.url,
   };
-  eventHandler.emit(event, emitData);
+  eventEmitter.emit(event, emitData);
   res.status(200).send();
 });
 
@@ -56,15 +56,15 @@ app.post('/slack', (req, res) => {
     channel: payload.channel,
     response_url: payload.response_url,
   };
-  eventHandler.emit(event, emitData);
+  eventEmitter.emit(event, emitData);
 });
 
 // Github Events
-eventHandler.on('issue_comment', issueCommentHandler);
-eventHandler.on('issues', issuesHandler);
-eventHandler.on('pull_request', prHandler);
+eventEmitter.on('issue_comment', issueCommentHandler);
+eventEmitter.on('issues', issuesHandler);
+eventEmitter.on('pull_request', prHandler);
 
 // Slack Events
-eventHandler.on('delete_comment', deleteCommentHandler);
+eventEmitter.on('delete_comment', deleteCommentHandler);
 
 app.listen(port, () => console.log('Gitbot running on port 3000'));
