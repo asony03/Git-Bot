@@ -8,9 +8,7 @@ module.exports = (app) => {
   // submit request is forwarded to this end point
   // create repo is triggered for each repository selected by the user
   app.post('/webhooks', async (req, res) => {
-    const {
-      user,
-    } = req.body;
+    const user = req.body.user;
     const repositories = [];
     
     for (const repo in req.body) {
@@ -63,7 +61,7 @@ const createWebHook = (user, repo, access_token) => new Promise((resolve, reject
         'insecure_ssl': '0',
       },
     })
-    .set('Authorization', `token ${  access_token}`)
+    .set('Authorization', `token ${access_token}`)
     .set('Cache-Control', 'no-cache')
     .set('Accept', 'application/json')
     .set('User-Agent', 'GitBot')

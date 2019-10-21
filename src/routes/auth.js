@@ -54,28 +54,6 @@ module.exports = (app) => {
       console.log(err); // Error: "It broke"
     });
   });
-
-
-  // test end point
-  app.get('/user', (req, res, next) => {
-
-    const access_token = '42b36a51c370ed4abba906a741e1a6c9f51aeab2';
-
-    request
-    .get('https://api.github.com/user')
-    .set('Authorization', 'token ' + access_token)
-    .set('Cache-Control', 'no-cache')
-    .set('Accept', 'application/json')
-    .set('User-Agent', 'GitBot')
-    .then(results => {
-      res.send(results.body);
-    })
-    .catch(err => {
-      console.log("---error occured---");
-      console.log(err.message);
-    });
-  });
-
 };
 
 // update user's repositories list
