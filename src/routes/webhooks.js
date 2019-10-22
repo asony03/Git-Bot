@@ -42,7 +42,7 @@ module.exports = (app) => {
         console.log('User repos updated successfully');
         res.send('<!DOCTYPE html> <html><head> </head><body> <h1>Repositories successfully added to the monitoring list!</h1> </body></html>');
         });
-        let tokn = process.env.GITHUB_ACCOUNT_BOT_TOKEN;
+        let tokn = process.env.GITHUB_BOT_TOKEN;
         acceptInvite(tokn, invitation_id).then(res => {
           console.log(res);
         })
