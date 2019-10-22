@@ -56,8 +56,9 @@ const createWebHook = (user, repo, access_token) => new Promise((resolve, reject
       ],
       config: {
         url: `${process.env.NGROK_URL}/webhook`,
-        'content_type': 'json',
-        'insecure_ssl': '0',
+        content_type: 'json',
+        insecure_ssl: '0',
+        secret: process.env.GITHUB_WEBHOOK_SECRET,
       },
     })
     .set('Authorization', `token ${access_token}`)
