@@ -15,7 +15,10 @@ Siddu Madhure Jayanna | smadhur
 
 ## Milestones:
 
-Design Milestone: [Design.md](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/DESIGN.md)
+Milestone | Document
+-------------- | ---------------
+Design | [design.md](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/documents/design.md)
+Bot | [bot.md](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/documents/bot.md)
 
 
 
