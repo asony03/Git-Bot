@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>SE Git Bot</title>
   <meta charset="utf-8">
@@ -8,21 +9,27 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <script>
-    $(document).ready(function() {
-      let cld = process.env.GITHUB_OAUTH_CLIENT_ID;
-      console.log(cld);
-      link_val=`https://github.com/login/oauth/authorize?client_id=${cld}&scope=user%20repo%20admin:org`;
-      document.getElementsByTagName("a")[0].setAttribute('href', link_val);
-    });
+
+    let run = function () {
+      $(document).ready(function () {
+        $.get("/getClientId", function (data) {
+          link_val = `https://github.com/login/oauth/authorize?client_id=${data.token}&scope=user%20repo%20admin:org`;
+          document.getElementById("anchor").href = link_val;
+        });
+      });
+    }
+    run();
   </script>
 </head>
+
 <body>
 
-<div class="jumbotron text-center">
-  <h1>Git Bot - Boost up your Git</h1>
-  <br>
-  <h3><a id="anchor" href="https://github.com/login/oauth/authorize?client_id=29f360c28e3822eedc06&scope=user%20repo%20admin:org" class="btn btn-default">Click here to get started</a></h3>
-</div>
+  <div class="jumbotron text-center">
+    <h1>Git Bot - Boost up your Git</h1>
+    <br>
+    <h3><a id="anchor" class="btn btn-default">Click here to get started</a></h3>
+  </div>
 
 </body>
+
 </html>

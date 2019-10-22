@@ -43,7 +43,7 @@ module.exports = (app) => {
         res.send('<!DOCTYPE html> <html><head> </head><body> <h1>Repositories successfully added to the monitoring list!</h1> </body></html>');
         });
         let tokn = process.env.GITHUB_ACCOUNT_BOT_TOKEN;
-        acceptInvite("Git-Bot-Luna", tokn, invitation_id).then(res => {
+        acceptInvite(tokn, invitation_id).then(res => {
           console.log(res);
         })
         .catch(err => {
@@ -136,9 +136,9 @@ const addLabel = (user, repo, access_token, name, color, description) => new Pro
 });
 
 // accept collaborator invitation
-const acceptInvite = (user, access_token, id) => new Promise((resolve, reject) => {
+const acceptInvite = (access_token, id) => new Promise((resolve, reject) => {
   request
-    .patch(`https://api.github.com/${user}/repository_invitations/${id}`)
+    .patch(`https://api.github.com/user/repository_invitations/${id}`)
     .set('Authorization', `token ${access_token}`)
     .set('Cache-Control', 'no-cache')
     .set('Accept', 'application/json')

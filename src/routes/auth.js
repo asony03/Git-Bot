@@ -3,8 +3,14 @@ const DBManager = require('../services/db.js')
 const dbman = new DBManager();
 dbman.start();
 
-// callback handler
+
 module.exports = (app) => {
+
+  app.get('/getClientId', (req, res) => {
+    res.json({ token: process.env.GITHUB_OAUTH_CLIENT_ID });
+  });
+
+  // callback handler
   app.get('/auth/callback', async (req, res, next) => {
 
     const { query } =  req;
