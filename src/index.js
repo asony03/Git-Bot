@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
+const engines = require('ejs');
 const events = require('events');
 
 // Load the Enviroment variables.
@@ -16,8 +18,7 @@ const {
 console.log('Environment Variables loaded :', process.env.ENV_LOADED || 'FALSE');
 
 const app = express();
-const port = 3000;
-
+const port = 8090;
 const eventEmitter = new events.EventEmitter();
 
 app.use(bodyParser.urlencoded({
@@ -26,6 +27,19 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(bodyParser.json());
+
+app.use(express.static(path.join(__dirname, '/views')));
+app.engine('html', engines.renderFile);
+app.set('view engine', 'html');
+app.set('views', __dirname + "/views");
+
+// API routes
+require('./routes/auth.js')(app);
+require('./routes/webhooks.js')(app);
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname+'/views/index.html'))
+});
 
 app.post('/webhook', (req, res) => {
   if (!verifySignature(req)) {
@@ -67,4 +81,5 @@ eventEmitter.on('pull_request', prHandler);
 // Slack Events
 eventEmitter.on('delete_comment', deleteCommentHandler);
 
-app.listen(port, () => console.log('Gitbot running on port 3000'));
+app.listen(port, () => console.log(`Gitbot running on port ${port}`));
+
