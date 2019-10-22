@@ -1,6 +1,7 @@
 const request = require('superagent');
-const mongodb = require('mongodb');
-const mongoClient = mongodb.MongoClient;
+const DBManager = require('../services/db.js')
+const dbman = new DBManager();
+dbman.start();
 
 // callback handler
 module.exports = (app) => {
@@ -10,7 +11,7 @@ module.exports = (app) => {
     const { code } =  query;
 
     if(!code) {
-      return res.send({
+      return res.status(401).send({
         success: false,
         message: 'Error: No Code'
       });
@@ -59,26 +60,42 @@ var addOrUpdateUserEntry = (result) => {
 
   return new Promise((resolve, reject) => {
 
-    mongoClient.connect(process.env.DATABASE_URL, function(err, db) {
+    // mongoClient.connect(process.env.DATABASE_URL, function(err, db) {
 
-      if(err) reject(err);
+    //   if(err) reject(err);
 
-      db.collection('users')
+    //   db.collection('users')
+    //   .find({user: result.user}).limit(1).next(function(err, res) {
+    //     if(res == null) {
+    //       db.collection('users').insert(result, function(err, res) {
+    //         err ? reject(err) : resolve(res);
+    //       });
+
+    //     } else {
+
+    //       var newValues = { $set: {access_token: result.access_token } };
+    //       db.collection('users').updateOne({user: result.user}, newValues, function(err, res) {
+    //         err ? reject(err) : resolve(res);
+    //       });
+    //     }
+    //   });
+    // });   
+    
+    dbman.db.collection('users')
       .find({user: result.user}).limit(1).next(function(err, res) {
         if(res == null) {
-          db.collection('users').insert(result, function(err, res) {
+          dbman.db.collection('users').insert(result, function(err, res) {
             err ? reject(err) : resolve(res);
           });
 
         } else {
 
           var newValues = { $set: {access_token: result.access_token } };
-          db.collection('users').updateOne({user: result.user}, newValues, function(err, res) {
+          dbman.db.collection('users').updateOne({user: result.user}, newValues, function(err, res) {
             err ? reject(err) : resolve(res);
           });
         }
       });
-    });    
   });
 };
 

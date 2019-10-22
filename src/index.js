@@ -49,7 +49,7 @@ app.post('/webhook', (req, res) => {
   const event = req.headers['x-github-event'];
   const emitData = {
     event,
-    payload: JSON.parse(req.body.payload),
+    payload: JSON.parse(JSON.stringify(req.body.payload)),
     protocol: req.protocol,
     host: req.headers.host,
     url: req.url,
@@ -60,7 +60,7 @@ app.post('/webhook', (req, res) => {
 
 app.post('/slack', (req, res) => {
   res.status(200).send();
-  const payload = JSON.parse(req.body.payload);
+  const payload = JSON.parse(JSON.stringify(req.body.payload));
   const val = JSON.parse(payload.actions[0].value);
   const { event } = val;
   const emitData = {
