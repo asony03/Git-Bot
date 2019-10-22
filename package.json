@@ -17,6 +17,7 @@
   "dependencies": {
     "@octokit/rest": "^16.33.1",
     "body-parser": "^1.19.0",
+    "chromedriver": "^77.0.0",
     "dotenv": "^8.2.0",
     "ejs": "^2.7.1",
     "express": "^4.17.1",
@@ -24,11 +25,13 @@
     "moment": "^2.24.0",
     "mongodb": "^2.2.5",
     "request": "^2.88.0",
+    "selenium-webdriver": "^4.0.0-alpha.5",
     "sequelize": "^5.21.1",
     "superagent": "^5.1.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "chai-http": "^4.3.0",
     "eslint": "^6.5.1",
     "eslint-config-airbnb-base": "^14.0.0",
