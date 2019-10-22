@@ -21,10 +21,16 @@ var slackUserName = "mkhan8@ncsu.edu";
 var slackPassword = "password@123";
 var slackChannel = "se-project";
 
+var gitBranchName = "GitBot-Test-Branch"+ Date.now();
+var gitFileName = "GitBot-Test-File"+ Date.now();
+var gitFileComment = "GitBot-Test-File-Comment"+ Date.now();
+var gitPullRequestName = "GitBot-Test-Pull-Request"+ Date.now();
+var gitPullRequestComment = "GitBot-Test-Pull-Request-Comment"+ Date.now();
+
 
 var chromeCapabilities = webdriver.Capabilities.chrome();
 var chromeOptions = {
-    'args': ['--no-sandbox']
+    'args': ['--no-sandbox',"--start-maximized"]
 };
 chromeCapabilities.set('chromeOptions', chromeOptions);
 
@@ -46,47 +52,77 @@ chromeCapabilities.set('chromeOptions', chromeOptions);
                 await browser.quit();
             });
 
-            it ('find the rpository, create an issue and validate label', async () => {
-                await browser.findElement(webdriver.By.xpath("(//div[@role='search' and @aria-label='Repositories' ]/input)[1]")).sendKeys(repository);
+            // it ('find the rpository, create an issue and validate label', async () => {
+            //     await browser.findElement(webdriver.By.xpath("(//div[@role='search' and @aria-label='Repositories' ]/input)[1]")).sendKeys(repository);
+            //     await browser.sleep(1000);  
+            //     await browser.findElement(webdriver.By.xpath("(//div[@class='js-repos-container']//li[contains(.,'"+repository+"')]//a)[1]")).click();
+            //     await browser.sleep(1000); 
+            //     await browser.findElement(webdriver.By.xpath("(//a//span[contains(., 'Issues')]//parent::a)")).click(); 
+            //     await browser.findElement(webdriver.By.xpath("//a[@role='button' and contains(., 'New issue')]")).click();
+            //     await browser.findElement(webdriver.By.id("issue_title")).sendKeys(issueName);
+            //     await browser.findElement(webdriver.By.xpath("(//button[@type='submit' and contains(., 'Submit new issue')])[1]")).click();
+            //     await browser.sleep(2000);
+            //     // await browser.findElement(webdriver.By.xpath("(//a//span[contains(., 'Issues')]//parent::a)")).click();
+            //     // await browser.findElement(webdriver.By.xpath("//div[@aria-label='Issues']//a[contains(., '"+issueName+"')]")).click();
+            //     await browser.navigate().refresh();
+            //     var labels = await browser.findElement(webdriver.By.xpath("//details[@id='labels-select-menu']/parent::div/div")).getText();
+            //     expect(labels).to.not.include('None yet');
+            // });
+
+            // it ('find the rpository, Comment on an issue and validate slack integration', async () => {
+            //     //issueName = 'GitBot-Test-Issue1571727951325';
+            //     //comment on the issue created in first test
+            //     await browser.findElement(webdriver.By.xpath("(//div[@role='search' and @aria-label='Repositories' ]/input)[1]")).sendKeys(repository);
+            //     await browser.sleep(1000);  
+            //     await browser.findElement(webdriver.By.xpath("(//div[@class='js-repos-container']//li[contains(.,'"+repository+"')]//a)[1]")).click();
+            //     await browser.sleep(1000); 
+            //     await browser.findElement(webdriver.By.xpath("(//a//span[contains(., 'Issues')]//parent::a)")).click(); 
+            //     await browser.findElement(webdriver.By.xpath("//div[@aria-label='Issues']//a[contains(., '"+issueName+"')]")).click();
+            //     await browser.findElement(webdriver.By.id("new_comment_field")).sendKeys(issueComment);
+            //     await browser.findElement(webdriver.By.xpath("//button[@type='submit' and contains(.,'Comment')]")).click(); 
+                
+            //     //slack integration
+            //     await browser.get(slackLoginLink);
+            //     await browser.findElement(webdriver.By.id("domain")).sendKeys(slackworkspace);
+            //     await browser.findElement(webdriver.By.id("submit_team_domain")).click();
+            //     await browser.sleep(2000);
+            //     await browser.findElement(webdriver.By.id("email")).sendKeys(slackUserName);
+            //     await browser.sleep(2000);
+            //     await browser.findElement(webdriver.By.id("password")).sendKeys(slackPassword);
+            //     await browser.sleep(2000);
+            //     await browser.findElement(webdriver.By.id("signin_btn")).click();
+            //     await browser.findElement(webdriver.By.xpath("(//div[contains(@class, 'channel_sidebar')])[1]//a[contains(., '"+slackChannel+"')]")).click();
+            //     await browser.sleep(2000);
+            //     var elemeents = await browser.findElements(webdriver.By.xpath("//a[contains(., 'Test-comment')]"))
+            //     expect(elemeents.length).to.be.gt(0);
+            // });
+
+            it ('find the repository, craete a branc , add a file and create pull request. Validate pull request labels', async () => {
+                
+                await browser.findElement(webdriver.By.xpath("(//div[@role='search' and @aria-label='Repositories']/input)[1]")).sendKeys(repository);
                 await browser.sleep(1000);  
                 await browser.findElement(webdriver.By.xpath("(//div[@class='js-repos-container']//li[contains(.,'"+repository+"')]//a)[1]")).click();
                 await browser.sleep(1000); 
-                await browser.findElement(webdriver.By.xpath("(//a//span[contains(., 'Issues')]//parent::a)")).click(); 
-                await browser.findElement(webdriver.By.xpath("//a[@role='button' and contains(., 'New issue')]")).click();
-                await browser.findElement(webdriver.By.id("issue_title")).sendKeys(issueName);
-                await browser.findElement(webdriver.By.xpath("(//button[@type='submit' and contains(., 'Submit new issue')])[1]")).click();
+                await browser.findElement(webdriver.By.id("branch-select-menu")).click();
                 await browser.sleep(2000);
+                await browser.findElement(webdriver.By.id("context-commitish-filter-field")).sendKeys(gitBranchName);
+                await browser.sleep(1000);
+                await browser.findElement(webdriver.By.xpath("//button[@type='submit' and contains(.,'Create branch:')]")).click();
+                // await browser.findElement(webdriver.By.id("context-commitish-filter-field")).sendKeys(webdriver.Key.ENTER);
+                await browser.sleep(1000);
+                await browser.findElement(webdriver.By.xpath("//button[@type='submit' and contains(.,'Create new file')]")).click();
+                await browser.findElement(webdriver.By.xpath("//input[@name='filename']")).sendKeys(gitFileName);
+                await browser.findElement(webdriver.By.id("commit-summary-input")).sendKeys(gitFileComment);
+                await browser.findElement(webdriver.By.id("submit-file")).click();
+                await browser.sleep(2000);
+                await browser.findElement(webdriver.By.xpath("//a[contains(@class,'new-pull-request-btn')]")).click();
+                await browser.sleep(2000);
+                await browser.findElement(webdriver.By.id("pull_request_title")).sendKeys(gitPullRequestName);
+                await browser.findElement(webdriver.By.xpath("//button[@type='submit' and contains(.,'Create pull request')]")).click();
+                await browser.sleep(5000);
                 await browser.navigate().refresh();
                 var labels = await browser.findElement(webdriver.By.xpath("//details[@id='labels-select-menu']/parent::div/div")).getText();
                 expect(labels).to.not.include('None yet');
-            });
-
-            it ('find the rpository, Comment on an issue and validate slack integration', async () => {
-                //issueName = 'GitBot-Test-Issue1571727951325';
-                //comment on the issue created in first test
-                await browser.findElement(webdriver.By.xpath("(//div[@role='search' and @aria-label='Repositories' ]/input)[1]")).sendKeys(repository);
-                await browser.sleep(1000);  
-                await browser.findElement(webdriver.By.xpath("(//div[@class='js-repos-container']//li[contains(.,'"+repository+"')]//a)[1]")).click();
-                await browser.sleep(1000); 
-                await browser.findElement(webdriver.By.xpath("(//a//span[contains(., 'Issues')]//parent::a)")).click(); 
-                await browser.findElement(webdriver.By.xpath("//div[@aria-label='Issues']//a[contains(., '"+issueName+"')]")).click();
-                await browser.findElement(webdriver.By.id("new_comment_field")).sendKeys(issueComment);
-                await browser.findElement(webdriver.By.xpath("//button[@type='submit' and contains(.,'Comment')]")).click(); 
-                
-                //slack integration
-                await browser.get(slackLoginLink);
-                await browser.findElement(webdriver.By.id("domain")).sendKeys(slackworkspace);
-                await browser.findElement(webdriver.By.id("submit_team_domain")).click();
-                await browser.sleep(2000);
-                await browser.findElement(webdriver.By.id("email")).sendKeys(slackUserName);
-                await browser.sleep(2000);
-                await browser.findElement(webdriver.By.id("password")).sendKeys(slackPassword);
-                await browser.sleep(2000);
-                await browser.findElement(webdriver.By.id("signin_btn")).click();
-                await browser.findElement(webdriver.By.xpath("(//div[contains(@class, 'channel_sidebar')])[1]//a[contains(., '"+slackChannel+"')]")).click();
-                await browser.sleep(2000);
-                var elemeents = await browser.findElements(webdriver.By.xpath("//a[contains(., 'Test-comment')]"))
-                expect(elemeents.length).to.be.gt(0);
             });
         });
     } catch (ex) {
