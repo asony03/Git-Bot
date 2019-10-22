@@ -3,9 +3,7 @@ const chaiHttp = require('chai-http');
 const nock = require('nock');
 const app = require('../src/index.js');
 const data = require('./mock.json');
-const {MongoMemoryServer} = require('mongodb-memory-server')
 const mongodb = require('mongodb');
-const MongoClient = mongodb.MongoClient;
 
 const expect = chai.expect;
 chai.use(chaiHttp);
@@ -28,18 +26,6 @@ describe('Test Auth.js', async () => {
     .persist()
     .get("/user/repos?visibility=all")
     .reply(200, JSON.stringify(data.get_repos) );
-
-    // mongoServer = new MongoMemoryServer({
-    //     instance: {
-    //         port:27017,
-    //         dbName: "bot"
-    //     }
-    // });
-    // const mongoUri = await mongoServer.getConnectionString();
-    // con = await MongoClient.connect(mongoUri, {
-    //     useNewUrlParser: true,
-    //     useUnifiedTopology: true,
-    //   });
     
     describe('GET /auth/callback', () => {
 
