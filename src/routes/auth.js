@@ -59,27 +59,6 @@ module.exports = (app) => {
 var addOrUpdateUserEntry = (result) => {
 
   return new Promise((resolve, reject) => {
-
-    // mongoClient.connect(process.env.DATABASE_URL, function(err, db) {
-
-    //   if(err) reject(err);
-
-    //   db.collection('users')
-    //   .find({user: result.user}).limit(1).next(function(err, res) {
-    //     if(res == null) {
-    //       db.collection('users').insert(result, function(err, res) {
-    //         err ? reject(err) : resolve(res);
-    //       });
-
-    //     } else {
-
-    //       var newValues = { $set: {access_token: result.access_token } };
-    //       db.collection('users').updateOne({user: result.user}, newValues, function(err, res) {
-    //         err ? reject(err) : resolve(res);
-    //       });
-    //     }
-    //   });
-    // });   
     
     dbman.db.collection('users')
       .find({user: result.user}).limit(1).next(function(err, res) {
