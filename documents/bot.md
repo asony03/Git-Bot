@@ -11,7 +11,8 @@
   - The bot will now post a message to slack when an issue containing **bug** is detected.
   - Admins can assign a priority to such issues directly from the slack message.
 
-### 1
+### Updated usecases:
+#### 1
 ``` 
 Use case: Automaticaly label new issues with one of the default labels provided by Github.
 * Preconditions:
@@ -25,8 +26,7 @@ Use case: Automaticaly label new issues with one of the default labels provided 
   - [S2] Bot calls the ML service to determine a most suited label for the issue
   - [S2] Bot applies the label the issue using github API
 ```
-
-### 2
+#### 2
 ```
 Use case: Alert repo admins using slack message when a toxic comment is posted in an issue or a pull request.
 * Preconditions:
@@ -44,8 +44,7 @@ Use case: Alert repo admins using slack message when a toxic comment is posted i
   - [AF1] The bot identifies the comments as non toxic.
   - [AF2] The bot does nothing.
 ```
-
-### 3
+#### 3
 ```
 Use case: Identify inaapropriate/offensive content in pull requests and issues body/title and tag them accordingly.
 * Preconditions:
@@ -62,8 +61,7 @@ Use case: Identify inaapropriate/offensive content in pull requests and issues b
   - [AF1] Toxicity is not detected
   - [AF2] The bot does nothing
 ```
-
-### 4
+#### 4
 ```
 Use case: Alert admins when a bug is detected and let them assign a priority to the issue directly from the slack message
 * Preconditions:
