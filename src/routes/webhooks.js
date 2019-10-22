@@ -1,6 +1,5 @@
 const request = require('superagent');
 const mongodb = require('mongodb');
-const database = require('../configs/db');
 
 const mongoClient = mongodb.MongoClient;
 
@@ -56,7 +55,7 @@ const createWebHook = (user, repo, access_token) => new Promise((resolve, reject
         'pull_request_review_comment',
       ],
       config: {
-        url: 'http://localhost:8090/gateway',
+        url: `${process.env.NGROK_URL}/webhook`,
         'content_type': 'json',
         'insecure_ssl': '0',
       },
@@ -76,7 +75,7 @@ const createWebHook = (user, repo, access_token) => new Promise((resolve, reject
 
 // helper function to fetch the access token of a user from DB
 var fetchAccessToken = (usr) => new Promise((resolve, reject) => {
-  mongoClient.connect(database.localUrl, (err, db) => {
+  mongoClient.connect(process.env.DATABASE_URL, (err, db) => {
 
     if (err) reject(err);
 
@@ -97,7 +96,7 @@ var fetchAccessToken = (usr) => new Promise((resolve, reject) => {
 
 // update user's repositories list
 var updateUserRepos = (usr, repositories) => new Promise((resolve, reject) => {
-  mongoClient.connect(database.localUrl, (err, db) => {
+  mongoClient.connect(process.env.DATABASE_URL, (err, db) => {
 
     if (err) reject(err);
 

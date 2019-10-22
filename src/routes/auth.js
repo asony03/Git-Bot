@@ -1,7 +1,5 @@
 const request = require('superagent');
 const mongodb = require('mongodb');
-const database = require('../configs/db'); 
-const credentials = require('../config'); 
 const mongoClient = mongodb.MongoClient;
 
 // callback handler
@@ -18,7 +16,7 @@ module.exports = (app) => {
       });
     }
     // use code to get the access token
-    await getAccessToken(code).then(async function(result) {
+    await getAccessToken(code).then(async (result) => {
 
       console.log(result); // "Stuff worked!"
 
@@ -61,7 +59,7 @@ var addOrUpdateUserEntry = (result) => {
 
   return new Promise((resolve, reject) => {
 
-    mongoClient.connect(database.localUrl, function(err, db) {
+    mongoClient.connect(process.env.DATABASE_URL, function(err, db) {
 
       if(err) reject(err);
 
@@ -92,8 +90,8 @@ var getAccessToken = (code) => {
     request
     .post('https://github.com/login/oauth/access_token')
     .send({ 
-      client_id: credentials.client_id, 
-      client_secret: credentials.client_secret,
+      client_id: process.env.GITHUB_OAUTH_CLIENT_ID, 
+      client_secret: process.env.GITHUB_OAUTH_CLIENT_SECRET,
       code: code
     })
     .set('Cache-Control', 'no-cache')
@@ -120,6 +118,3 @@ var getAccessToken = (code) => {
     });
   });
 };
-
-
-
