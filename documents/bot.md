@@ -2,6 +2,15 @@
 
 ## Usecase Refinement
 
+### Changes Made:
+
+- Instead of maintaining a database with toxic comments posted by each user, we are not alerting the repo admins about the comments in real time (as and when the comment is created). 
+- Admins have the option to delete inappropriate comments directly from slack as the bots creates an **interactive message** instead of just notifying the user.
+- Updated the preconditions with all the integrations we have done to implement the usecases
+- Changed priority detections use case :
+  - The bot will now post a message to slack when an issue containing **bug** is detected.
+  - Admins can assign a priority to such issues directly from the slack message.
+
 ### 1
 ``` 
 Use case: Automaticaly label new issues with one of the default labels provided by Github.
