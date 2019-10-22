@@ -14,7 +14,7 @@ class DBManager {
         this.connection = await MongoClient.connect(url, { useNewUrlParser: true });
         this.db = this.connection.db(await this.server.getDbName());
     } else {
-        this.connection = MongoClient.connect(process.env.DATABASE_URL,{ useNewUrlParser: true });
+        this.connection = await MongoClient.connect(process.env.DATABASE_URL,{ useNewUrlParser: true });
         this.db = this.connection.db(process.env.DB_NAME);
     }
   }
