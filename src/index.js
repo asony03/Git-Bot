@@ -83,3 +83,5 @@ eventEmitter.on('delete_comment', deleteCommentHandler);
 
 app.listen(port, () => console.log(`Gitbot running on port ${port}`));
 
+module.exports = app;
+

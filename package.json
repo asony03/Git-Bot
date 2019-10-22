@@ -4,7 +4,7 @@
   "description": "<p align=\"center\"> <img alt=\"logo\" width=\"200\" height=\"200\" src=\"https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/logo.png\"> </p>",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/.bin/mocha --reporter spec test/*.js",
     "start": "nodemon src",
     "listen": "~/ngrok http 3000"
   },
@@ -17,20 +17,24 @@
   "dependencies": {
     "@octokit/rest": "^16.33.1",
     "body-parser": "^1.19.0",
-    "ejs": "^2.7.1",
-    "mongodb": "^2.2.5",
-    "superagent": "^5.1.0",
     "dotenv": "^8.2.0",
+    "ejs": "^2.7.1",
     "express": "^4.17.1",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
+    "mongodb": "^2.2.5",
     "request": "^2.88.0",
-    "sequelize": "^5.21.1"
+    "sequelize": "^5.21.1",
+    "superagent": "^5.1.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "eslint": "^6.5.1",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
+    "mocha": "^6.2.2",
+    "nock": "^11.4.0",
     "nodemon": "^1.19.4"
   }
 }
