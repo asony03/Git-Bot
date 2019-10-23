@@ -2,13 +2,12 @@ const request = require('superagent');
 const DBManager = require('../services/db.js');
 
 const dbman = new DBManager();
-dbman.start();
 
 // update user's repositories list
-const addOrUpdateUserEntry = (result) => {
-
+const addOrUpdateUserEntry = async (result) => {
   return new Promise((resolve, reject) => {
-    dbman.db.collection('users')
+    dbman.start().then(() => {
+      dbman.db.collection('users')
       .find({ user: result.user }).limit(1).next((err, res) => {
         if(res == null) {
           dbman.db.collection('users').insert(result, (errVal, resVal) => {
@@ -23,6 +22,7 @@ const addOrUpdateUserEntry = (result) => {
           });
         }
       });
+    });
   });
 };
 
@@ -83,7 +83,7 @@ module.exports = (app) => {
     }
     // use code to get the access token
     await getAccessToken(code).then(async (reslt) => {
-      console.log(reslt); // "Stuff worked!"
+      // console.log(reslt); // "Stuff worked!"
       var result = reslt;
       result.repos = [];
       // add/update the access token

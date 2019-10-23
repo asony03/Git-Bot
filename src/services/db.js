@@ -8,14 +8,14 @@ class DBManager {
   }
 
   async start() {
-    if(process.env.NODE_ENV == "test" ) {
-        this.server = new MongoMemoryServer();
-        const url = await this.server.getConnectionString();
-        this.connection = await MongoClient.connect(url, { useNewUrlParser: true });
-        this.db = this.connection.db(await this.server.getDbName());
+    if (process.env.NODE_ENV === 'test') {
+      this.server = new MongoMemoryServer();
+      const url = await this.server.getConnectionString();
+      this.connection = await MongoClient.connect(url, {});
+      this.db = this.connection.db(await this.server.getDbName());
     } else {
-        this.connection = await MongoClient.connect(process.env.DATABASE_URL,{ useNewUrlParser: true });
-        this.db = this.connection.db(process.env.DB_NAME);
+      this.connection = await MongoClient.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+      this.db = this.connection.db(process.env.DB_NAME);
     }
   }
 

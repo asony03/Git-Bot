@@ -6,6 +6,7 @@ const expect = chai.expect;
 const should = chai.should();
 const app = require("../src/index.js");
 const data = require("./mock.json");
+data.issues_event_payload.payload = JSON.stringify(data.issues_event_payload.payload);
 chai.use(chaiHttp);
 const helper = require('../src/helpers');
 const sinon = require('sinon');

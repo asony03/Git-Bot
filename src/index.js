@@ -42,9 +42,11 @@ app.get('/', (req, res) => {
 });
 
 app.post('/webhook', (req, res) => {
-  if (process.env.NODE_ENV !== 'test' && !verifySignature(req)) {
-    res.status(401).send('Invalid X-hub Signature');
-    return;
+  if (process.env.NODE_ENV !== 'test') {
+    if (!verifySignature(req)) {
+      res.status(401).send('Invalid X-hub Signature');
+      return;
+    }
   }
   const event = req.headers['x-github-event'];
   const emitData = {
@@ -60,7 +62,7 @@ app.post('/webhook', (req, res) => {
 
 app.post('/slack', (req, res) => {
   res.status(200).send();
-  const payload = JSON.parse(JSON.stringify(req.body.payload));
+  const payload = JSON.parse(req.body.payload);
   const val = JSON.parse(payload.actions[0].value);
   const { event } = val;
   const emitData = {
