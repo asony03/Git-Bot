@@ -128,7 +128,7 @@ chromeCapabilities.set('chromeOptions', chromeOptions);
                 await browser.findElement(webdriver.By.xpath("//button[@type='submit' and contains(.,'Create new file')]")).click();
                 await browser.sleep(1000);
                 await browser.findElement(webdriver.By.xpath("//input[@name='filename']")).sendKeys(gitFileName);
-                await browser.findElement(webdriver.By.id("commit-summary-input")).sendKeys(gitFileComment);
+                await browser.findElement(webdriver.By.id("commit-summary-input")).sendKeys(gitPullRequestName);
                 await browser.sleep(1000);
                 await browser.findElement(webdriver.By.id("submit-file")).click();
                 await browser.sleep(2000);
