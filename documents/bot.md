@@ -81,3 +81,7 @@ Use case: Alert admins when a bug is detected and let them assign a priority to 
  - [AF2] The bot does nothing
 ``` 
 <br />
+
+## Test Cases
+
+![Test Output](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/tests.png)
