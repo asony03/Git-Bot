@@ -84,4 +84,23 @@ Use case: Alert admins when a bug is detected and let them assign a priority to 
 
 ## Test Cases
 
+### Unit Testing :
+
+- Tested APIs
+  - / (Homepage)
+  - /webhook
+  - /slack
+- Tested OAuth API
+  - /auth/callback
+  
+ ### Integration Testing :
+ 
+
+ - Find the repository, create an issue and validate label are generated
+ - Find the repository, Comment on an issue and validate the comment is posted on slack for Toxic Comment
+ - Find the repository, Comment on an issue and validate the comment is not posted on slack for Non - Toxic Comment (This test case is expected to fail as we have not implemented the ML service to get the toxicity. The mocking service will treat the comment as toxic for Integrations.)
+ - Find the repository, create a branch , add a file and create pull request. Validate pull request labels are generated
+ - Find the repository, open the created branch, comment on the pull request and Validate the cooment is classified and posted on slack
+       
+
 ![Test Output](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/tests.png)
