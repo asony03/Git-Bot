@@ -104,3 +104,7 @@ Use case: Alert admins when a bug is detected and let them assign a priority to 
        
 
 ![Test Output](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/tests.png)
+
+## Screencast Video
+
+[Google drive link](https://drive.google.com/file/d/1w_JRIBHbgnpzyfJu94pwTu_KJQ3uwxDT/view?usp=sharing)
