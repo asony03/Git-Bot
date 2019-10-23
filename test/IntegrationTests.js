@@ -18,6 +18,9 @@ const repository = 'GitBot-Test';
 const issueName = 'GitBot-Test-Issue' + Date.now();
 const issueComment = 'GitBot-Test-Comment' + Date.now();
 
+const issueNonToxicName = 'GitBot-Test-Issue-Non-Toxic' + Date.now();
+const issueNonToxicComment = 'GitBot-Test-Non-Toxic-Comment' + Date.now();
+
 const slackLoginLink = 'https://slack.com/signin';
 const slackworkspace = process.env.SLACK_WORKSPACE;
 const slackUserName = process.env.SLACK_USER_NAME;
@@ -123,9 +126,9 @@ chromeCapabilities.set('chromeOptions', chromeOptions);
         await browser.sleep(1000);
         await browser.findElement(webdriver.By.xpath("(//a//span[contains(., 'Issues')]//parent::a)")).click();
         await browser.sleep(1000);
-        await browser.findElement(webdriver.By.xpath(`//div[@aria-label='Issues']//a[contains(., '${issueName}')]`)).click();
+        await browser.findElement(webdriver.By.xpath(`//div[@aria-label='Issues']//a[contains(., '${issueNonToxicName}')]`)).click();
         await browser.sleep(1000);
-        await browser.findElement(webdriver.By.id('new_comment_field')).sendKeys(issueComment);
+        await browser.findElement(webdriver.By.id('new_comment_field')).sendKeys(issueNonToxicComment);
         await browser.sleep(1000);
         await browser.findElement(webdriver.By.xpath("//button[@type='submit' and contains(.,'Comment')]")).click();
 
@@ -144,7 +147,7 @@ chromeCapabilities.set('chromeOptions', chromeOptions);
         await browser.sleep(1000);
         await browser.findElement(webdriver.By.xpath(`(//div[contains(@class, 'channel_sidebar')])[1]//a[contains(., '${slackChannel}')]`)).click();
         await browser.sleep(5000);
-        const elements = await browser.findElements(webdriver.By.xpath(`//a[contains(., '${issueComment}')]`));
+        const elements = await browser.findElements(webdriver.By.xpath(`//a[contains(., '${issueNonToxicComment}')]`));
         //expect the comment is not posted on slack
         expect(elements.length).to.be.eq(0);
       });
