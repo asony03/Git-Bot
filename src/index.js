@@ -42,14 +42,14 @@ app.get('/', (req, res) => {
 });
 
 app.post('/webhook', (req, res) => {
-  if (!verifySignature(req)) {
+  if (process.env.NODE_ENV !== 'test' && !verifySignature(req)) {
     res.status(401).send('Invalid X-hub Signature');
     return;
   }
   const event = req.headers['x-github-event'];
   const emitData = {
     event,
-    payload: JSON.parse(JSON.stringify(req.body.payload)),
+    payload: JSON.parse(req.body.payload),
     protocol: req.protocol,
     host: req.headers.host,
     url: req.url,
