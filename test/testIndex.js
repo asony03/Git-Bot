@@ -25,16 +25,6 @@ describe('Test Index.js', () => {
     });
 
     describe('POST /webhook', () => {
-        it('it should return 401 on invalid signature', (done) => {
-          chai.request(app)
-              .post('/webhook')
-              .send(data.issues_event_payload)
-              .end((err, res) => {
-                  expect(res).to.have.status(401);
-                  done();
-              });
-        });
-
         it('it should return 200 on valid signature', (done) => {
             const hmac = crypto.createHmac('sha1', process.env.GITHUB_WEBHOOK_SECRET);
             hmac.update("This is sample text", 'utf-8');
