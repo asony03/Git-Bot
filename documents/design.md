@@ -112,13 +112,13 @@ Our bot works in the background and creates labels/comments in github. Bot also 
 
 - **Github** : We are using Github's platform to integrate our bot with. Bot will read the data using Github API's for issues and comments and process the data accordingly. It will assign labels for issues and pull requests and notifies admin about the  toxic behavior of users.
 
-- **Server** : This is a Node.js server which will listen to the incoming events and perform actions. It will communicate with AWS services which will provide the ML functonalities
+- **Server** : This is a Node.js server which will listen to the incoming events and perform actions. It will communicate with AWS services which will provide the ML functonalities.
 
-- **Database** : This is a MySQL database hosted in AWS, preferably AWS Aurora to store each users comments and their labels, This will help us determine when the user has reached his/her threshold of toxic/in-approprite comments. 
+- **Database** : This is a Mongo database hosted in AWS, used to store users and their repositories monitored by out Bot.
 
-- **ML Services** : We are planning to have 2 instances for performing our tasks. One is toxicity detection model, which will be deployed on AWS Sagemaker. We will send the comment's text to this and get insights. Another one will be a label detection service, preferably using AWS comprehend, which will determine the most suitable label for an issue or a comment. 
+- **ML Services** : We are planning to have 1 service with 2 ML APIs. One for toxicity detection, and another to generate labels (issue type and priority level).
 
-- **Email Server** : We will setup email server in our Node.js server as a service which will be used to send emails to the maintainers/ repo admins.
+- **Slack** : We integrate with Slack and use it to notify repo admins about different GitHub events, and also trigger admin actions on GitHub repositories through Slack messaging.
 
 
 This is an event-driven architecture as it consists of event producers that generate a stream of events and event consumers that listen for the events.
