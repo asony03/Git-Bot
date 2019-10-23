@@ -1,5 +1,17 @@
 # Bot Milestone
 
+## Bot Implementation
+
+- Implemented OAuth for users to login using their github account. User then chooses the repository he wants the bot to work on.
+- Bot sets up required webhooks and creates additional labels in the repo
+- Bot adds itself as the collaborator for the selected repository
+- Implemented event listeners for github webhooks.
+- Implemented event handlers for relevant events (issue_comment, issue, pull_request, pull_request_comment)
+- Integrated bot with slack, so the bot can send messages to a specific slack channel (will be generalized in the deployment stage of the project)
+- Mock ML services (Since we have not implemented the services yet, we are using a mock ML service which returns the mock json data) (needs to be replaced in further milestones)
+- Unit Tests
+- Automation tests using selenium
+
 ## Usecase Refinement
 
 ### Changes Made:
