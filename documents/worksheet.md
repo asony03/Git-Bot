@@ -28,7 +28,7 @@
 | Scenario      | Delete and Create API                   |  #6
 | Unit Tests    | Completed      |
 | Use Case      | Programatically generate webhooks for the repository / Completed        | &nbsp;
-| Scenario      | Generate webooks programatically, add bot as a collaborator, accept collaboration invite, add new priority labels for the repository the user wants the bot to work on.                 |  #9
+| Scenario      | Generate webooks programatically, add bot as a collaborator, accept collaboration invite and add new priority labels for the repository the user wants the bot to work on.                 |  #9
 | Use Case      | Generate mocking data / Completed        | &nbsp;
 | Scenario      | Github webhooks                |  #10
 | Scenario      | Github API requests (create label, attach label, close/delete comment/PR)                |  #10
