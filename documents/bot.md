@@ -120,4 +120,5 @@ Use case: Alert admins when a bug is detected and let them assign a priority to 
 
 ## Screencast Video
 
-[Google drive link](https://drive.google.com/file/d/1w_JRIBHbgnpzyfJu94pwTu_KJQ3uwxDT/view?usp=sharing)
+[Selenium Test](https://drive.google.com/file/d/1w_JRIBHbgnpzyfJu94pwTu_KJQ3uwxDT/view?usp=sharing)
+[Use Case Demo](https://drive.google.com/open?id=1guD0XiG60pyeAd42ACYwRnrvdlplu2nz)
