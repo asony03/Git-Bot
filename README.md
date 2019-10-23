@@ -19,6 +19,7 @@ Milestone | Document
 -------------- | ---------------
 Design | [design.md](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/documents/design.md)
 Bot | [bot.md](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/documents/bot.md)
+Worksheet | [worksheet.md](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/documents/worksheet.md)
 
 
 
