@@ -10,6 +10,7 @@
 - Changed priority detections use case :
   - The bot will now post a message to slack when an issue containing **bug** is detected.
   - Admins can assign a priority to such issues directly from the slack message.
+- Architecture diagram has also been updated accordingly.
 
 ### Updated usecases:
 #### 1
