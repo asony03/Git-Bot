@@ -18,6 +18,9 @@ const repository = 'GitBot-Test';
 const issueName = 'GitBot-Test-Issue' + Date.now();
 const issueComment = 'GitBot-Test-Comment' + Date.now();
 
+const issueNonToxicName = 'GitBot-Test-Issue-Non-Toxic' + Date.now();
+const issueNonToxicComment = 'GitBot-Test-Non-Toxic-Comment' + Date.now();
+
 const slackLoginLink = 'https://slack.com/signin';
 const slackworkspace = process.env.SLACK_WORKSPACE;
 const slackUserName = process.env.SLACK_USER_NAME;
@@ -54,7 +57,7 @@ chromeCapabilities.set('chromeOptions', chromeOptions);
         await browser.quit();
       });
 
-      it('find the rpository, create an issue and validate label', async () => {
+      it('find the repository, create an issue and validate label are generated', async () => {
         await browser.sleep(1000);
         await browser.findElement(webdriver.By.xpath("(//div[@role='search' and @aria-label='Repositories' ]/input)[1]")).sendKeys(repository);
         await browser.sleep(1000);
@@ -76,7 +79,7 @@ chromeCapabilities.set('chromeOptions', chromeOptions);
         expect(labels).to.not.include('None yet');
       });
 
-      it('find the rpository, Comment on an issue and validate slack integration', async () => {
+      it('find the repository, Comment on an issue and validate the comment is posted on slack for Toxic Comment', async () => {
         // issueName = 'GitBot-Test-Issue1571727951325';
         // comment on the issue created in first test
         await browser.sleep(1000);
@@ -108,10 +111,48 @@ chromeCapabilities.set('chromeOptions', chromeOptions);
         await browser.findElement(webdriver.By.xpath(`(//div[contains(@class, 'channel_sidebar')])[1]//a[contains(., '${slackChannel}')]`)).click();
         await browser.sleep(5000);
         const elements = await browser.findElements(webdriver.By.xpath(`//a[contains(., '${issueComment}')]`));
+        // expext the comment to be posted on slack.
         expect(elements.length).to.be.gt(0);
       });
 
-      it('find the repository, create a branch , add a file and create pull request. Validate pull request labels', async () => {
+
+      it('find the repository, Comment on an issue and validate the comment is not posted on slack for Non - Toxic Comment', async () => {
+        //This test case is expected to fail as we have not implemented the ML service to get the toxicity. The mocking service will treat the comment as toxic for Integrations.
+        // comment on the issue created in first test
+        await browser.sleep(1000);
+        await browser.findElement(webdriver.By.xpath("(//div[@role='search' and @aria-label='Repositories' ]/input)[1]")).sendKeys(repository);
+        await browser.sleep(1000);
+        await browser.findElement(webdriver.By.xpath(`(//div[@class='js-repos-container']//li[contains(.,'${repository}')]//a)[1]`)).click();
+        await browser.sleep(1000);
+        await browser.findElement(webdriver.By.xpath("(//a//span[contains(., 'Issues')]//parent::a)")).click();
+        await browser.sleep(1000);
+        await browser.findElement(webdriver.By.xpath(`//div[@aria-label='Issues']//a[contains(., '${issueNonToxicName}')]`)).click();
+        await browser.sleep(1000);
+        await browser.findElement(webdriver.By.id('new_comment_field')).sendKeys(issueNonToxicComment);
+        await browser.sleep(1000);
+        await browser.findElement(webdriver.By.xpath("//button[@type='submit' and contains(.,'Comment')]")).click();
+
+        // slack integration
+        await browser.get(slackLoginLink);
+        await browser.sleep(1000);
+        await browser.findElement(webdriver.By.id('domain')).sendKeys(slackworkspace);
+        await browser.sleep(1000);
+        await browser.findElement(webdriver.By.id('submit_team_domain')).click();
+        await browser.sleep(2000);
+        await browser.findElement(webdriver.By.id('email')).sendKeys(slackUserName);
+        await browser.sleep(2000);
+        await browser.findElement(webdriver.By.id('password')).sendKeys(slackPassword);
+        await browser.sleep(2000);
+        await browser.findElement(webdriver.By.id('signin_btn')).click();
+        await browser.sleep(1000);
+        await browser.findElement(webdriver.By.xpath(`(//div[contains(@class, 'channel_sidebar')])[1]//a[contains(., '${slackChannel}')]`)).click();
+        await browser.sleep(5000);
+        const elements = await browser.findElements(webdriver.By.xpath(`//a[contains(., '${issueNonToxicComment}')]`));
+        //expect the comment is not posted on slack
+        expect(elements.length).to.be.eq(0);
+      });
+
+      it('find the repository, create a branch , add a file and create pull request. Validate pull request labels are generated', async () => {
         await browser.sleep(1000);
         await browser.findElement(webdriver.By.xpath("(//div[@role='search' and @aria-label='Repositories']/input)[1]")).sendKeys(repository);
         await browser.sleep(1000);
