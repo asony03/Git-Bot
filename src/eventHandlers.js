@@ -6,8 +6,9 @@ exports.issueCommentHandler = (event) => {
   // Only handle the created event, reject others.
   if (event.payload.action !== 'created') return;
   (async () => {
-    const toxicity = await getToxicity(event.payload.body);
-    if (toxicity.is_toxic) {
+    const is_toxic = await getToxicity(event.payload.comment.body);
+    if (is_toxic) {
+      //console.log("-----------------------------------------Toxic Comment Detected-----------------------------------------")
       await sendIssueToSlack(event.payload);
     }
   })();
