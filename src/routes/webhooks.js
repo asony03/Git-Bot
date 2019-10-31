@@ -1,7 +1,5 @@
 const request = require('superagent');
-const mongodb = require('mongodb');
-
-const mongoClient = mongodb.MongoClient;
+const DBManager = require('../services/db.js');
 
 module.exports = (app) => {
   // submit request is forwarded to this end point
@@ -154,10 +152,7 @@ const acceptInvite = (access_token, id) => new Promise((resolve, reject) => {
 
 // helper function to fetch the access token of a user from DB
 var fetchAccessToken = (usr) => new Promise((resolve, reject) => {
-  mongoClient.connect(process.env.DATABASE_URL, (err, db) => {
-
-    if (err) reject(err);
-
+  DBManager.getDB().then((db) => {
     db.collection('users')
       .find({
         user: usr
@@ -175,10 +170,7 @@ var fetchAccessToken = (usr) => new Promise((resolve, reject) => {
 
 // update user's repositories list
 var updateUserRepos = (usr, repositories) => new Promise((resolve, reject) => {
-  mongoClient.connect(process.env.DATABASE_URL, (err, db) => {
-
-    if (err) reject(err);
-
+  DBManager.getDB().then((db) => {
     var newValues = {
       $set: {
         repos: repositories
