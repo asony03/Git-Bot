@@ -9,7 +9,7 @@ require('dotenv').config();
 
 const { rawBodySaver, verifySignature } = require('./helpers');
 const {
-  issueCommentHandler,
+  issuesAndReviewsCommentHandler,
   issuesHandler,
   deleteCommentHandler,
   prHandler,
@@ -75,9 +75,10 @@ app.post('/slack', (req, res) => {
 });
 
 // Github Events
-eventEmitter.on('issue_comment', issueCommentHandler);
+eventEmitter.on('issue_comment', issuesAndReviewsCommentHandler);
 eventEmitter.on('issues', issuesHandler);
 eventEmitter.on('pull_request', prHandler);
+eventEmitter.on('pull_request_review_comment',issuesAndReviewsCommentHandler );
 
 // Slack Events
 eventEmitter.on('delete_comment', deleteCommentHandler);
