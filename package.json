@@ -4,7 +4,7 @@
   "description": "<p align=\"center\"> <img alt=\"logo\" width=\"200\" height=\"200\" src=\"https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/logo.png\"> </p>",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test && ./node_modules/.bin/mocha --exit --reporter spec test/*.js",
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha --exit --reporter spec test/*.js",
     "start": "nodemon src",
     "listen": "~/ngrok http 8090"
   },
@@ -16,6 +16,10 @@
   "license": "ISC",
   "dependencies": {
     "@octokit/rest": "^16.33.1",
+    "@tensorflow-models/toxicity": "^1.2.0",
+    "@tensorflow/tfjs-converter": "^1.2.11",
+    "@tensorflow/tfjs-core": "^1.2.11",
+    "@tensorflow/tfjs-node": "^1.2.11",
     "body-parser": "^1.19.0",
     "chromedriver": "^77.0.0",
     "dotenv": "^8.2.0",

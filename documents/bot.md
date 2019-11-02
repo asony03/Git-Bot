@@ -1,5 +1,18 @@
 # Bot Milestone
 
+## Bot Implementation
+
+- Implemented OAuth for users to login using their github account. User then chooses the repository he wants the bot to work on
+- Bot sets up required webhooks and creates required labels in the repo (priority labels)
+- Bot adds itself as the collaborator for the selected repository
+- Implemented event listeners for github webhooks
+- Implemented event handlers for relevant events (issue_comment, issue, pull_request, pull_request_comment)
+- Integrated bot with slack, so the bot can send messages to a specific slack channel (will be generalized in the deployment stage of the project)
+- Implemented event listeners for slack, which lets the admin's delete the github comments directly from slack interactive messages
+- Mock ML services (Since we have not implemented the services yet, we are using a mock ML service which returns the mock json data) (needs to be replaced in further milestones)
+- Unit Tests
+- Automation tests using selenium
+
 ## Usecase Refinement
 
 ### Changes Made:
@@ -81,3 +94,32 @@ Use case: Alert admins when a bug is detected and let them assign a priority to 
  - [AF2] The bot does nothing
 ``` 
 <br />
+
+## Test Cases
+
+### Unit Testing :
+
+- Tested APIs
+  - / (Homepage)
+  - /webhook
+  - /slack
+- Tested OAuth API
+  - /auth/callback
+  
+ ### Integration Testing :
+ 
+
+ - Find the repository, create an issue and validate label are generated
+ - Find the repository, Comment on an issue and validate the comment is posted on slack for Toxic Comment
+ - Find the repository, Comment on an issue and validate the comment is not posted on slack for Non - Toxic Comment (<em>This test case is expected to fail as we have not implemented the ML service to get the toxicity. The mocking service will treat the comment as toxic for Integrations.</em>)
+ - Find the repository, create a branch , add a file and create pull request. Validate pull request labels are generated
+ - Find the repository, open the created branch, comment on the pull request and Validate the cooment is classified and posted on slack
+       
+
+![Test Output](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/tests.png)
+
+## Screencast Video
+
+[Selenium Test](https://drive.google.com/file/d/1w_JRIBHbgnpzyfJu94pwTu_KJQ3uwxDT/view?usp=sharing)
+
+[Use Case Demo](https://drive.google.com/open?id=1guD0XiG60pyeAd42ACYwRnrvdlplu2nz)

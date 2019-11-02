@@ -21,10 +21,9 @@ const app = express();
 const port = 8090;
 const eventEmitter = new events.EventEmitter();
 
-app.use(bodyParser.urlencoded({
-  extended: false,
-  verify: rawBodySaver,
-}));
+app.use(bodyParser.json({ verify: rawBodySaver }));     // whichever is matched first will be applied.
+app.use(bodyParser.urlencoded({ extended: false, verify: rawBodySaver }));
+app.use(bodyParser.raw({ verify: rawBodySaver, type: function () { return true } }));
 
 app.use(bodyParser.json());
 
@@ -42,14 +41,16 @@ app.get('/', (req, res) => {
 });
 
 app.post('/webhook', (req, res) => {
-  if (process.env.NODE_ENV !== 'test' && !verifySignature(req)) {
-    res.status(401).send('Invalid X-hub Signature');
-    return;
+  if (process.env.NODE_ENV !== 'test') {
+    if (!verifySignature(req)) {
+      res.status(401).send('Invalid X-hub Signature');
+      return;
+    }
   }
   const event = req.headers['x-github-event'];
   const emitData = {
     event,
-    payload: JSON.parse(req.body.payload),
+    payload: req.body,      // body parser will json parse ad populate the req.body
     protocol: req.protocol,
     host: req.headers.host,
     url: req.url,
@@ -60,7 +61,7 @@ app.post('/webhook', (req, res) => {
 
 app.post('/slack', (req, res) => {
   res.status(200).send();
-  const payload = JSON.parse(JSON.stringify(req.body.payload));
+  const payload = req.body;     // body parser will json parse ad populate the req.body
   const val = JSON.parse(payload.actions[0].value);
   const { event } = val;
   const emitData = {
@@ -84,4 +85,3 @@ eventEmitter.on('delete_comment', deleteCommentHandler);
 app.listen(port, () => console.log(`Gitbot running on port ${port}`));
 
 module.exports = app;
-

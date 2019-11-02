@@ -1,27 +1,31 @@
 const { MongoClient } = require('mongodb');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 
-class DBManager {
-  constructor() {
-    this.db = null;
-    this.connection = null;
-  }
+var DBManager = {}
 
-  async start() {
-    if(process.env.NODE_ENV == "test" ) {
-        this.server = new MongoMemoryServer();
-        const url = await this.server.getConnectionString();
-        this.connection = await MongoClient.connect(url, { useNewUrlParser: true });
-        this.db = this.connection.db(await this.server.getDbName());
-    } else {
-        this.connection = await MongoClient.connect(process.env.DATABASE_URL,{ useNewUrlParser: true });
-        this.db = this.connection.db(process.env.DB_NAME);
-    }
+DBManager.getDB = async () => {
+  if (typeof DBManager.db === 'undefined') {
+    await DBManager.start();
   }
+  return DBManager.db;
+}
 
-  stop() {
-    this.connection.close();
-    return this.server.stop();
+DBManager.start = async () => {
+  if (process.env.NODE_ENV === 'test') {
+    DBManager.server = new MongoMemoryServer();
+    const url = await DBManager.server.getConnectionString();
+    DBManager.connection = await MongoClient.connect(url, {});
+    DBManager.db = DBManager.connection.db(await DBManager.server.getDbName());
+  } else {
+    DBManager.connection = await MongoClient.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+    DBManager.db = DBManager.connection.db(process.env.DB_NAME);
+  }
+}
+
+DBManager.stop = () => {
+  DBManager.connection.close();
+  if (process.env.NODE_ENV === 'test') {
+    DBManager.server.stop();
   }
 }
 
