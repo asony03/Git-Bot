@@ -1,5 +1,6 @@
 const request = require('superagent');
 const async = require('async');
+const DBManager = require('./db.js');
 
 // creates webhooks using "user", "repo" and "access_token" values
 exports.createWebHook = async (user, repo, accessToken) => new Promise((resolve, reject) => {
@@ -173,4 +174,52 @@ exports.acceptInvite = async (accessToken, id) => new Promise((resolve, reject) 
     .catch((err) => {
       reject(err);
     });
+});
+
+// helper function to fetch the access token of a user from DB
+exports.fetchAccessToken = async (usr) => new Promise((resolve, reject) => {
+  DBManager.getDB().then((db) => {
+    db.collection('users')
+      .find({
+        user: usr
+      }).limit(1).next((error, res) => {
+        if (res == null || (error)) {
+          reject("token entry not found for " + usr);
+        } else {
+          resolve(res.access_token);
+        }
+      });
+  });
+});
+
+// helper function to fetch the current list of monitred repositories of a user from DB
+exports.fetchCurrentRepositories = async (usr) => new Promise((resolve, reject) => {
+  DBManager.getDB().then((db) => {
+    db.collection('users')
+      .find({
+        user: usr
+      }).limit(1).next((err, res) => {
+        if (res == null || (err)) {
+          reject('User found: ' + usr);
+        } else {
+          resolve(res.repos);
+        }
+      });
+  });
+});
+
+// update user's repositories list
+exports.updateUserRepos = async (usr, repositories) => new Promise((resolve, reject) => {
+  DBManager.getDB().then((db) => {
+    const newValues = {
+      $set: {
+        repos: repositories
+      }
+    };
+    db.collection('users').updateOne({
+      user: usr
+    }, newValues, (err, res) => {
+      err ? reject(err) : resolve(res);
+    });
+  });
 });

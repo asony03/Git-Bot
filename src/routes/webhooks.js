@@ -1,62 +1,18 @@
-const DBManager = require('../services/db.js');
-const { createWebHook, deleteWebHook, addCollaborator, deleteCollaborator, addLabel, deleteLabel, acceptInvite } = require('../services/helper.js');
+const { 
+  createWebHook, 
+  deleteWebHook, 
+  addCollaborator, 
+  deleteCollaborator, 
+  addLabel, 
+  deleteLabel, 
+  acceptInvite, 
+  fetchAccessToken, 
+  fetchCurrentRepositories, 
+  updateUserRepos, 
+} = require('../services/webhookHelper.js');
 
 Array.prototype.diff = function(a) {
   return this.filter((i) => { return a.indexOf(i) < 0; });
-};
-
-// helper function to fetch the access token of a user from DB
-async function fetchAccessToken(usr) {
-  return new Promise((resolve, reject) => {
-    DBManager.getDB().then((db) => {
-      db.collection('users')
-        .find({
-          user: usr
-        }).limit(1).next((error, res) => {
-          if (res == null || (error)) {
-            reject("token entry not found for " + usr);
-          } else {
-            resolve(res.access_token);
-          }
-        });
-    });
-  });
-};
-
-// helper function to fetch the current list of monitred repositories of a user from DB
-async function fetchCurrentRepositories(usr) {
-  return new Promise((resolve, reject) => {
-    DBManager.getDB().then((db) => {
-      db.collection('users')
-        .find({
-          user: usr
-        }).limit(1).next((err, res) => {
-          if (res == null || (err)) {
-            reject('User found: ' + usr);
-          } else {
-            resolve(res.repos);
-          }
-        });
-    });
-  });
-};
-
-// update user's repositories list
-async function updateUserRepos(usr, repositories) {
-  return new Promise((resolve, reject) => {
-    DBManager.getDB().then((db) => {
-      const newValues = {
-        $set: {
-          repos: repositories
-        }
-      };
-      db.collection('users').updateOne({
-        user: usr
-      }, newValues, (err, res) => {
-        err ? reject(err) : resolve(res);
-      });
-    });
-  });
 };
 
 async function addRepository(user, reposit, accessToken) {   
