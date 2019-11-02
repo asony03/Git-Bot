@@ -2,7 +2,7 @@ const { sendIssueToSlack, respondToDelete } = require('./services/slack');
 const { addIssueLabel, deleteComment, addPRLabel } = require('./services/github');
 const { getToxicity } = require('./services/ml');
 
-exports.issuesAndReviewsCommenttHandler = (event) => {
+exports.issuesAndReviewsCommentHandler = (event) => {
   // Only handle the created event, reject others.
   if (event.payload.action !== 'created') return;
   (async () => {
