@@ -6,20 +6,18 @@ const addOrUpdateUserEntry = async (result) => {
   return new Promise((resolve, reject) => {
     DBManager.getDB().then((db) => {
       db.collection('users')
-      .find({ user: result.user }).limit(1).next((err, res) => {
-        if(res == null) {
-          db.collection('users').insert(result, (errVal, resVal) => {
-            errVal ? reject(errVal) : resolve(resVal);
-          });
-
+        .find({ user: result.user }).limit(1).next((err, res) => {
+          if (res == null) {
+            db.collection('users').insert(result, (errVal, resVal) => {
+              errVal ? reject(errVal) : resolve(resVal);
+            });
           } else {
-
-          var newValues = { $set: {access_token: result.access_token } };
-          db.collection('users').updateOne({ user: result.user }, newValues, (dbErr, dbRes) => {
-            dbErr ? reject(dbErr) : resolve(dbRes);
-          });
-        }
-      });
+            const newValues = { $set: {access_token: result.access_token } };
+            db.collection('users').updateOne({ user: result.user }, newValues, (dbErr, dbRes) => {
+              dbErr ? reject(dbErr) : resolve(dbRes);
+            });
+          }
+        });
     });
   });
 };
@@ -117,4 +115,3 @@ module.exports = (app) => {
     });
   });
 };
-

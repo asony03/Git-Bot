@@ -1,6 +1,6 @@
 const request = require('superagent');
-const DBManager = require('../services/db.js');
 const async = require('async');
+const DBManager = require('../services/db.js');
 
 Array.prototype.diff = function(a) {
   return this.filter((i) => { return a.indexOf(i) < 0; });
@@ -60,9 +60,7 @@ const listWebHooks = (user, repo, accessToken) => new Promise((resolve, reject) 
 
 // creates webhooks using "user", "repo" and "access_token" values
 async function deleteWebHook(user, repo, accessToken) {
-
   return new Promise((resolve, reject) => {
-    
     async.waterfall([
       (callback) => {
         listWebHooks(user, repo, accessToken)
@@ -103,7 +101,7 @@ async function addCollaborator(user, repo, accessToken) {
     request
       .put(`https://api.github.com/repos/${user}/${repo}/collaborators/Git-Bot-Luna`)
       .send({
-        'permission': 'admin'
+        permission: 'admin'
       })
       .set('Authorization', `token ${accessToken}`)
       .set('Cache-Control', 'no-cache')
@@ -200,37 +198,40 @@ async function acceptInvite(accessToken, id) {
 
 
 // helper function to fetch the access token of a user from DB
-var fetchAccessToken = (usr) => new Promise((resolve, reject) => {
-  DBManager.getDB().then((db) => {
-    db.collection('users')
-      .find({
-        user: usr
-      }).limit(1).next((error, res) => {
-        if (res == null || (error)) {
-          reject("token entry not found for " + usr);
-        } else {
-          resolve(res.access_token);
-        }
-      });
+async function fetchAccessToken(usr) {
+  return new Promise((resolve, reject) => {
+    DBManager.getDB().then((db) => {
+      db.collection('users')
+        .find({
+          user: usr
+        }).limit(1).next((error, res) => {
+          if (res == null || (error)) {
+            reject("token entry not found for " + usr);
+          } else {
+            resolve(res.access_token);
+          }
+        });
+    });
   });
-});
+};
 
 // helper function to fetch the current list of monitred repositories of a user from DB
-const fetchCurrentRepositories = (usr) => new Promise((resolve, reject) => {
-  mongoClient.connect(process.env.DATABASE_URL, (error, db) => {
-    if (error) reject(error);
-    db.collection('users')
-      .find({
-        user: usr
-      }).limit(1).next((err, res) => {
-        if (res == null || (err)) {
-          reject('User found: ' + usr);
-        } else {
-          resolve(res.repos);
-        }
-      });
+async function fetchCurrentRepositories(usr) {
+  return new Promise((resolve, reject) => {
+    DBManager.getDB().then((db) => {
+      db.collection('users')
+        .find({
+          user: usr
+        }).limit(1).next((err, res) => {
+          if (res == null || (err)) {
+            reject('User found: ' + usr);
+          } else {
+            resolve(res.repos);
+          }
+        });
+    });
   });
-});
+};
 
 // update user's repositories list
 async function updateUserRepos(usr, repositories) {
@@ -243,7 +244,7 @@ async function updateUserRepos(usr, repositories) {
       };
       db.collection('users').updateOne({
         user: usr
-      }, newValues, function (err, res) {
+      }, newValues, (err, res) => {
         err ? reject(err) : resolve(res);
       });
     });
@@ -258,7 +259,7 @@ async function addRepository(user, reposit, accessToken) {
     await addLabel(user, reposit, accessToken, "Priority: Medium", "FF9933", "Medium Priority");
     await addLabel(user, reposit, accessToken, "Priority: Low", "FFFC00", "Low Priority");
     return op.id;
-  } catch(err) {
+  } catch (err) {
     console.log("** Error occured while handling add repository for" + reposit + "**" + err + "**"); 
   };
 };
@@ -330,7 +331,7 @@ module.exports = (app) => {
         });
     };
    
-    //update db
+    // update db
     updateUserRepos(user, finalReposList).then((result) => {
       console.log('User repos updated successfully');
       res.send('<!DOCTYPE html> <html><head> </head><body> <h1>Repositories successfully added to the monitoring list!</h1> </body></html>');
