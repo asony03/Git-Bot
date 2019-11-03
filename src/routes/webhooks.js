@@ -1,13 +1,54 @@
-const request = require('superagent');
-const DBManager = require('../services/db.js');
+const { 
+  createWebHook, 
+  deleteWebHook, 
+  addCollaborator, 
+  deleteCollaborator, 
+  addLabel, 
+  deleteLabel, 
+  acceptInvite, 
+  fetchAccessToken, 
+  fetchCurrentRepositories, 
+  updateUserRepos, 
+} = require('../services/webhookHelper.js');
+
+Array.prototype.diff = function(a) {
+  return this.filter((i) => { return a.indexOf(i) < 0; });
+};
+
+async function addRepository(user, reposit, accessToken) {   
+  try {
+    await createWebHook(user, reposit, accessToken );
+    const op = await addCollaborator(user, reposit, accessToken);
+    await addLabel(user, reposit, accessToken, "Priority: High", "E00201", "High Priority");
+    await addLabel(user, reposit, accessToken, "Priority: Medium", "FF9933", "Medium Priority");
+    await addLabel(user, reposit, accessToken, "Priority: Low", "FFFC00", "Low Priority");
+    return op.id;
+  } catch (err) {
+    console.log("** Error occured while handling add repository for" + reposit + "**" + err + "**"); 
+  };
+};
+
+async function deleteRepository(user, reposit, accessToken) {   
+  try { 
+    await deleteWebHook(user, reposit, accessToken);
+    await deleteCollaborator(user, reposit, accessToken);
+    await deleteLabel(user, reposit, accessToken, "Priority: High");
+    await deleteLabel(user, reposit, accessToken, "Priority: Medium");
+    await deleteLabel(user, reposit, accessToken, "Priority: Low");
+  } catch (err) {
+    console.log("** Error occured while handling delete repository for " + reposit + "**" + err + "**"); 
+  };
+};
 
 module.exports = (app) => {
   // submit request is forwarded to this end point
   // create repo is triggered for each repository selected by the user
   app.post('/webhooks', async (req, res) => {
+
     const user = req.body.user;
     const repositories = [];
     
+    // populate repositories list
     for (const repo in req.body) {
       if (req.body[repo] == repo) {
         repositories.push(repo);
@@ -16,171 +57,48 @@ module.exports = (app) => {
 
     // get user's access token
     let accessToken;
-    let invitation_id;
     await fetchAccessToken(user).then((token) => {
       accessToken = token;
     });
 
-    // create webhooks
+    let monitoredRepositories;
+    await fetchCurrentRepositories(user).then((repoList) => {
+      monitoredRepositories = repoList;
+    });
+
+    const addList = repositories.diff(monitoredRepositories);
+    const deleteList = monitoredRepositories.diff(repositories);    
+
+    // create webhooks ..... etc
     const finalReposList = [];
-    for (var i = 0; i < repositories.length; i++) {
-      let reposit = repositories[i];
-      createWebHook(user, reposit, accessToken)
-      .then(output => addCollaborator(user, reposit, accessToken))
-      .then(output => { 
-        invitation_id = output.id;
-        addLabel(user, reposit, accessToken, "Priority: High", "E00201", "High Priority") 
-      })
-      .then(output => addLabel(user, reposit, accessToken, "Priority: Medium", "FF9933", "Medium Priority"))
-      .then(output => addLabel(user, reposit, accessToken, "Priority: Low", "FFFC00", "Low Priority"))
-      .then(output => {
-        finalReposList.push(reposit);
-        // update DB
-        updateUserRepos(user, finalReposList).then((result) => {
-        console.log('User repos updated successfully');
-        res.send('<!DOCTYPE html> <html><head> </head><body> <h1>Repositories successfully added to the monitoring list!</h1> </body></html>');
-        });
-        let tokn = process.env.GITHUB_BOT_TOKEN;
-        acceptInvite(tokn, invitation_id).then(res => {
-          console.log(res);
-        })
-        .catch(err => {
+    const invitesList = [];
+
+    for (let i = 0; i < addList.length; i++) {
+      const reposit = addList[i];
+      const invId = await addRepository(user, reposit, accessToken);
+      invitesList.push(invId);
+      finalReposList.push(reposit);
+    };
+
+    // delete webhooks .... etc
+    for (let i = 0; i < deleteList.length; i++) {
+      const reposit = deleteList[i];
+      await deleteRepository(user, reposit, accessToken);
+    };
+
+    // accept invites
+    const tokn = process.env.GITHUB_BOT_TOKEN;
+    for (let k = 0; k < invitesList.length; k++) {
+      acceptInvite(tokn, invitesList[k])
+        .catch((err) => {
           console.log(err);
         });
-
-      })
-      .catch(err => {
-        console.log(err);
-        console.log(`Process failed: need to try setting up the repositories again`);
-      });
     };
+   
+    // update db
+    updateUserRepos(user, finalReposList).then((result) => {
+      console.log('User repos updated successfully');
+      res.send('<!DOCTYPE html> <html><head> </head><body> <h1>Repositories successfully added to the monitoring list!</h1> </body></html>');
+    });
   });
 };
-
-// creates webhooks using "user", "repo" and "access_token" values
-const createWebHook = (user, repo, access_token) => new Promise((resolve, reject) => {
-  request
-    .post(`https://api.github.com/repos/${user}/${repo}/hooks`)
-    .send({
-      name: 'web',
-      'active': true,
-      'events': [
-        'issues',
-        'pull_request',
-        'issue_comment',
-        'pull_request_review',
-        'pull_request_review_comment',
-      ],
-      config: {
-        url: `http://localhost:8090/webhook`,
-        'content_type': 'json',
-        'insecure_ssl': '0',
-      },
-    })
-    .set('Authorization', `token ${access_token}`)
-    .set('Cache-Control', 'no-cache')
-    .set('Accept', 'application/json')
-    .set('User-Agent', 'GitBot')
-    .set('content-type', 'application/json')
-    .then((result) => {
-      resolve(result.body);
-    })
-    .catch((err) => {
-      reject(err);
-    });
-});
-
-
-// add bot as collaborator
-const addCollaborator = (user, repo, access_token) => new Promise((resolve, reject) => {
-  request
-    .put(`https://api.github.com/repos/${user}/${repo}/collaborators/Git-Bot-Luna`)
-    .send({
-      'permission': 'admin'
-    })
-    .set('Authorization', `token ${access_token}`)
-    .set('Cache-Control', 'no-cache')
-    .set('Accept', 'application/json')
-    .set('User-Agent', 'GitBot')
-    .set('content-type', 'application/json')
-    .then((result) => {
-      resolve(result.body);
-    })
-    .catch((err) => {
-      reject(err);
-    });
-});
-
-// add label to the repository
-const addLabel = (user, repo, access_token, name, color, description) => new Promise((resolve, reject) => {
-  request
-    .post(`https://api.github.com/repos/${user}/${repo}/labels`)
-    .send({
-      "name": name,
-      "description": description,
-      "color": color
-    })
-    .set('Authorization', `token ${access_token}`)
-    .set('Cache-Control', 'no-cache')
-    .set('Accept', 'application/json')
-    .set('User-Agent', 'GitBot')
-    .set('content-type', 'application/json')
-    .then((result) => {
-      resolve(result.body);
-    })
-    .catch((err) => {
-      reject(err);
-    });
-});
-
-// accept collaborator invitation
-const acceptInvite = (access_token, id) => new Promise((resolve, reject) => {
-  request
-    .patch(`https://api.github.com/user/repository_invitations/${id}`)
-    .set('Authorization', `token ${access_token}`)
-    .set('Cache-Control', 'no-cache')
-    .set('Accept', 'application/json')
-    .set('User-Agent', 'GitBot')
-    .then((result) => {
-      resolve(result.body);
-    })
-    .catch((err) => {
-      reject(err);
-    });
-});
-
-
-// helper function to fetch the access token of a user from DB
-var fetchAccessToken = (usr) => new Promise((resolve, reject) => {
-  DBManager.getDB().then((db) => {
-    db.collection('users')
-      .find({
-        user: usr
-      }).limit(1).next(function (err, res) {
-        if (res == null || (err)) {
-          reject("token entry not found for " + usr);
-
-        } else {
-          resolve(res.access_token);
-
-        }
-      });
-  });
-});
-
-// update user's repositories list
-var updateUserRepos = (usr, repositories) => new Promise((resolve, reject) => {
-  DBManager.getDB().then((db) => {
-    var newValues = {
-      $set: {
-        repos: repositories
-      }
-    };
-    db.collection('users').updateOne({
-      user: usr
-    }, newValues, function (err, res) {
-      err ? reject(err) : resolve(res);
-    });
-  });
-});
-

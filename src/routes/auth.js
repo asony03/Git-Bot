@@ -6,20 +6,18 @@ const addOrUpdateUserEntry = async (result) => {
   return new Promise((resolve, reject) => {
     DBManager.getDB().then((db) => {
       db.collection('users')
-      .find({ user: result.user }).limit(1).next((err, res) => {
-        if(res == null) {
-          db.collection('users').insert(result, (errVal, resVal) => {
-            errVal ? reject(errVal) : resolve(resVal);
-          });
-
-        } else {
-
-          var newValues = { $set: {access_token: result.access_token } };
-          db.collection('users').updateOne({ user: result.user }, newValues, (dbErr, dbRes) => {
-            dbErr ? reject(dbErr) : resolve(dbRes);
-          });
-        }
-      });
+        .find({ user: result.user }).limit(1).next((err, res) => {
+          if (res == null) {
+            db.collection('users').insert(result, (errVal, resVal) => {
+              errVal ? reject(errVal) : resolve(resVal);
+            });
+          } else {
+            const newValues = { $set: {access_token: result.access_token } };
+            db.collection('users').updateOne({ user: result.user }, newValues, (dbErr, dbRes) => {
+              dbErr ? reject(dbErr) : resolve(dbRes);
+            });
+          }
+        });
     });
   });
 };
@@ -27,7 +25,7 @@ const addOrUpdateUserEntry = async (result) => {
 // 2 - way handshake -> pass code to get the access token
 const getAccessToken = (code) => {
 
-  var userData = {};
+  const userData = {};
   return new Promise((resolve, reject) => {
     request
       .post('https://github.com/login/oauth/access_token')
@@ -82,11 +80,11 @@ module.exports = (app) => {
     // use code to get the access token
     await getAccessToken(code).then(async (reslt) => {
       // console.log(reslt); // "Stuff worked!"
-      var result = reslt;
+      const result = reslt;
       result.repos = [];
       // add/update the access token
       await addOrUpdateUserEntry(result).then((op) => {
-        console.log('success');
+        console.log('User data successfully updated');
       })
         .catch((err) => {
           console.log(err);
@@ -101,16 +99,18 @@ module.exports = (app) => {
         .then(results => {
           var repos = []
           for(var repo in results.body) {
-            repos.push(results.body[repo].name);
-          }
+            if (results.body[repo].name.trim().length != 0 && !repos.includes(results.body[repo].name.trim())){
+              repos.push(results.body[repo].name);
+            };           
+          };
           
           // list all repositories for user to select
-          res.render('repos.html', {data:repos, user:result.user});
+          res.render('repos.html', { data: repos, user: result.user });
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
-    }, function(err) {
+    }, (err) => {
       console.log(err); // Error: "It broke"
     });
   });
