@@ -1,9 +1,12 @@
-const { sendIssueToSlack, respondToDelete } = require('./services/slack');
+const { sendIssueToSlack, respondToDelete , sendLabelsToSlack } = require('./services/slack');
 const { addIssueLabel, deleteComment, addPRLabel } = require('./services/github');
 const { getToxicity } = require('./services/ml');
 
-exports.issueCommentHandler = (event) => {
+exports.issuesAndReviewsCommentHandler = (event) => {
   // Only handle the created event, reject others.
+
+  //below line for windows - temporary
+  //event.payload = JSON.parse(event.payload.payload)
   if (event.payload.action !== 'created') return;
   (async () => {
     const is_toxic = await getToxicity(event.payload.comment.body);
@@ -15,10 +18,16 @@ exports.issueCommentHandler = (event) => {
 };
 
 exports.issuesHandler = (event) => {
+  //below line for windows - temporary
+  //event.payload = JSON.parse(event.payload.payload)
   if (event.payload.action !== 'opened') return;
 
   (async () => {
-    await addIssueLabel(event.payload);
+    const labels = await addIssueLabel(event.payload);
+    if(labels.includes("bug")){
+      // console.log('bug detected');
+      await sendLabelsToSlack(event.payload);
+    }
   })();
 };
 
@@ -34,3 +43,5 @@ exports.prHandler = (event) => {
     await addPRLabel(event.payload);
   })();
 };
+
+
