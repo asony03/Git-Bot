@@ -9,13 +9,13 @@ const octokit = new Octokit({
 exports.addIssueLabel = async (payload) => {
   const labels = await getLabels(payload.issue.body);
   const labelsToApply = Object.keys(labels).sort((a, b) => labels[b] - labels[a]).slice(0, 2);
-
-  return octokit.issues.addLabels({
+  octokit.issues.addLabels({
     owner: payload.repository.owner.login,
     repo: payload.repository.name,
     issue_number: payload.issue.number,
     labels: labelsToApply,
   });
+  return labelsToApply;
 };
 
 exports.deleteComment = (payload) => {
@@ -28,7 +28,6 @@ exports.deleteComment = (payload) => {
 exports.addPRLabel = async (payload) => {
   const labels = await getLabels(payload.pull_request.body);
   const labelsToApply = Object.keys(labels).sort((a, b) => labels[b] - labels[a]).slice(0, 2);
-
   octokit.issues.addLabels({
     owner: payload.repository.owner.login,
     repo: payload.repository.name,
