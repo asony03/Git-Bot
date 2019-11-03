@@ -1,5 +1,6 @@
 const request = require('request');
 const template = require('../templates/toxic_message');
+const template_Labels = require('../templates/label_priority');
 
 const endpoint = 'https://slack.com/api/chat.postMessage';
 
@@ -18,6 +19,32 @@ exports.sendIssueToSlack = async (payload) => {
     },
   };
   // console.log(options);
+  return new Promise((resolve, reject) => {
+    request(options, (err, res) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(res);
+    });
+  });
+};
+
+
+exports.sendLabelsToSlack = async (payload) => {
+  const message = template_Labels(payload);
+  //console.log(message)
+  const options = {
+    url: endpoint,
+    method: 'POST',
+    json: true,
+    headers: {
+      Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}`,
+    },
+    body: {
+      channel: 'se-project',
+      ...message,
+    },
+  };
   return new Promise((resolve, reject) => {
     request(options, (err, res) => {
       if (err) {
