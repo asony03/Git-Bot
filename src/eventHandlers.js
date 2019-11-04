@@ -1,11 +1,11 @@
-const { sendIssueToSlack, respondToDelete , sendLabelsToSlack } = require('./services/slack');
-const { addIssueLabel, deleteComment, addPRLabel } = require('./services/github');
+const { sendIssueToSlack, respondToDelete , sendLabelsToSlack, respondToAddPriority} = require('./services/slack');
+const { addIssueLabel, deleteComment, addPRLabel , addLabel } = require('./services/github');
 const { getToxicity } = require('./services/ml');
 
 exports.issuesAndReviewsCommentHandler = (event) => {
   // Only handle the created event, reject others.
   //below line for windows - temporary
-  // event.payload = JSON.parse(event.payload.payload)
+  event.payload = JSON.parse(event.payload.payload)
   if (event.payload.action !== 'created') return;
   (async () => {
     const is_toxic = await getToxicity(event.payload.comment.body);
@@ -18,7 +18,7 @@ exports.issuesAndReviewsCommentHandler = (event) => {
 
 exports.issuesHandler = (event) => {
   //below line for windows - temporary
-  // event.payload = JSON.parse(event.payload.payload)
+  event.payload = JSON.parse(event.payload.payload)
   if (event.payload.action !== 'opened') return;
 
   (async () => {
@@ -42,5 +42,15 @@ exports.prHandler = (event) => {
     await addPRLabel(event.payload);
   })();
 };
+
+exports.addIssueLabelFromSlack = (event) => {
+  let label = new Array(event.selectedOption.value);
+  (async () => {
+    await addLabel(event.payload.owner,event.payload.repo,event.payload.issue_number,label);
+    await respondToAddPriority(event,label);
+  })();
+};
+
+
 
 

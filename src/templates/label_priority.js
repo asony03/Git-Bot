@@ -34,6 +34,12 @@ module.exports = (obj) => {
                     type : 'plain_text',
                     text : 'Assign a priority'
                 },
+                action_id: JSON.stringify({
+                  event: 'add_priority_to_issue',
+                  owner: obj.repository.owner.login,
+                  repo: obj.repository.name,
+                  issue_number: obj.issue.number,
+                }),
                 options : [
                     {
                         text: {
@@ -56,7 +62,7 @@ module.exports = (obj) => {
                         },
                         value : "low"
                     },
-                ]
+                ],
         }
     ],
 },
