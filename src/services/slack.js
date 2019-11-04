@@ -1,6 +1,7 @@
 const request = require('request');
 const template = require('../templates/toxic_message');
 const template_Labels = require('../templates/label_priority');
+const template_toxic_updated = require('../templates/toxic_message_updated');
 
 const endpoint = 'https://slack.com/api/chat.postMessage';
 
@@ -56,14 +57,15 @@ exports.sendLabelsToSlack = async (payload) => {
 };
 
 exports.respondToDelete = async (payload) => {
+  const message = template_toxic_updated(payload);
   const options = {
     url: payload.response_url,
     json: true,
     method: 'POST',
     body: {
-      text: `Comment deleted by <@${payload.user.id}>`,
       response_type: 'in_channel',
-      replace_original: false,
+      replace_original: true,
+      ...message,
     },
   };
   return new Promise((resolve, reject) => {
