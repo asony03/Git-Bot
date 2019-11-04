@@ -61,7 +61,11 @@ app.post('/webhook', (req, res) => {
 
 app.post('/slack', (req, res) => {
   res.status(200).send();
-  const payload = req.body;     // body parser will json parse ad populate the req.body
+  
+  let payload = req.body;     // body parser will json parse ad populate the req.body
+  //below line for windows - temporary
+  //payload = JSON.parse(payload.payload)
+
   const val = JSON.parse(payload.actions[0].value);
   const { event } = val;
   const emitData = {
@@ -70,6 +74,7 @@ app.post('/slack', (req, res) => {
     user: payload.user,
     channel: payload.channel,
     response_url: payload.response_url,
+    message : payload.message,
   };
   eventEmitter.emit(event, emitData);
 });

@@ -4,9 +4,8 @@ const { getToxicity } = require('./services/ml');
 
 exports.issuesAndReviewsCommentHandler = (event) => {
   // Only handle the created event, reject others.
-
   //below line for windows - temporary
-  //event.payload = JSON.parse(event.payload.payload)
+  // event.payload = JSON.parse(event.payload.payload)
   if (event.payload.action !== 'created') return;
   (async () => {
     const is_toxic = await getToxicity(event.payload.comment.body);
@@ -19,7 +18,7 @@ exports.issuesAndReviewsCommentHandler = (event) => {
 
 exports.issuesHandler = (event) => {
   //below line for windows - temporary
-  //event.payload = JSON.parse(event.payload.payload)
+  // event.payload = JSON.parse(event.payload.payload)
   if (event.payload.action !== 'opened') return;
 
   (async () => {
