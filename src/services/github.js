@@ -9,13 +9,17 @@ const octokit = new Octokit({
 exports.addIssueLabel = async (payload) => {
   const labels = await getLabels(payload.issue.body);
   const labelsToApply = Object.keys(labels).sort((a, b) => labels[b] - labels[a]).slice(0, 2);
+  this.addLabel(payload.repository.owner.login,payload.repository.name,payload.issue.number,labelsToApply);
+  return labelsToApply;
+};
+
+exports.addLabel = async (owner,repo,issue_number,labelsToApply) => {
   octokit.issues.addLabels({
-    owner: payload.repository.owner.login,
-    repo: payload.repository.name,
-    issue_number: payload.issue.number,
+    owner: owner,
+    repo: repo,
+    issue_number: issue_number,
     labels: labelsToApply,
   });
-  return labelsToApply;
 };
 
 exports.deleteComment = (payload) => {

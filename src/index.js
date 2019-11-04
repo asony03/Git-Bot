@@ -13,6 +13,7 @@ const {
   issuesHandler,
   deleteCommentHandler,
   prHandler,
+  addIssueLabelFromSlack,
 } = require('./eventHandlers');
 
 console.log('Environment Variables loaded :', process.env.ENV_LOADED || 'FALSE');
@@ -61,12 +62,19 @@ app.post('/webhook', (req, res) => {
 
 app.post('/slack', (req, res) => {
   res.status(200).send();
-  
   let payload = req.body;     // body parser will json parse ad populate the req.body
   //below line for windows - temporary
   //payload = JSON.parse(payload.payload)
-
-  const val = JSON.parse(payload.actions[0].value);
+  //console.log(payload )
+  const actionType = payload.actions[0].type;
+  let val;
+  let selectedOption;
+  if(actionType === 'button')
+      val = JSON.parse(payload.actions[0].value);
+  else if(actionType === 'static_select'){
+      val = JSON.parse(payload.actions[0].action_id);
+      selectedOption =  payload.actions[0].selected_option;
+  }
   const { event } = val;
   const emitData = {
     event,
@@ -75,6 +83,7 @@ app.post('/slack', (req, res) => {
     channel: payload.channel,
     response_url: payload.response_url,
     message : payload.message,
+    selectedOption :selectedOption,
   };
   eventEmitter.emit(event, emitData);
 });
@@ -87,6 +96,7 @@ eventEmitter.on('pull_request_review_comment',issuesAndReviewsCommentHandler );
 
 // Slack Events
 eventEmitter.on('delete_comment', deleteCommentHandler);
+eventEmitter.on('add_priority_to_issue', addIssueLabelFromSlack);
 
 app.listen(port, () => console.log(`Gitbot running on port ${port}`));
 
