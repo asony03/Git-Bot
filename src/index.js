@@ -64,7 +64,7 @@ app.post('/slack', (req, res) => {
   res.status(200).send();
   let payload = req.body;     // body parser will json parse ad populate the req.body
   //below line for windows - temporary
-  payload = JSON.parse(payload.payload)
+  //payload = JSON.parse(payload.payload)
   //console.log(payload )
   const actionType = payload.actions[0].type;
   let val;
