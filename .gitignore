@@ -3,3 +3,10 @@
 package-lock.json
 .env
 *.env
+*/pickles*
+*/data*
+*.hdf5
+.ipynb_checkpoints
+*.tar
+.vscode
+__pycache__
