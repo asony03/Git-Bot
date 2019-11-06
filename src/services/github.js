@@ -7,17 +7,18 @@ const octokit = new Octokit({
 });
 
 exports.addIssueLabel = async (payload) => {
-  const labels = await getLabels(payload.issue.body);
-  const labelsToApply = Object.keys(labels).sort((a, b) => labels[b] - labels[a]).slice(0, 2);
-  this.addLabel(payload.repository.owner.login,payload.repository.name,payload.issue.number,labelsToApply);
+  console.log(payload.issue.body, payload.issue.title);
+  const labels = await getLabels(payload.issue.body, payload.issue.title);
+  const labelsToApply = Object.keys(labels).sort((a, b) => labels[b] - labels[a]).slice(0, 1);
+  this.addLabel(payload.repository.owner.login, payload.repository.name, payload.issue.number, labelsToApply);
   return labelsToApply;
 };
 
-exports.addLabel = async (owner,repo,issue_number,labelsToApply) => {
+exports.addLabel = async (owner, repo, issueNumber, labelsToApply) => {
   octokit.issues.addLabels({
-    owner: owner,
-    repo: repo,
-    issue_number: issue_number,
+    owner,
+    repo,
+    issue_number: issueNumber,
     labels: labelsToApply,
   });
 };
@@ -30,7 +31,7 @@ exports.deleteComment = (payload) => {
 };
 
 exports.addPRLabel = async (payload) => {
-  const labels = await getLabels(payload.pull_request.body);
+  const labels = await getLabels(payload.pull_request.body, payload.pull_request.title);
   const labelsToApply = Object.keys(labels).sort((a, b) => labels[b] - labels[a]).slice(0, 2);
   octokit.issues.addLabels({
     owner: payload.repository.owner.login,

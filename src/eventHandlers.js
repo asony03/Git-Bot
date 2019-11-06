@@ -3,28 +3,21 @@ const { addIssueLabel, deleteComment, addPRLabel , addLabel } = require('./servi
 const { getToxicity } = require('./services/ml');
 
 exports.issuesAndReviewsCommentHandler = (event) => {
-  // Only handle the created event, reject others.
-  //below line for windows - temporary
-  //event.payload = JSON.parse(event.payload.payload)
   if (event.payload.action !== 'created') return;
   (async () => {
-    const is_toxic = await getToxicity(event.payload.comment.body);
-    if (is_toxic) {
-      //console.log("-----------------------------------------Toxic Comment Detected-----------------------------------------")
+    const isToxic = await getToxicity(event.payload.comment.body);
+    if (isToxic) {
       await sendIssueToSlack(event.payload);
     }
   })();
 };
 
 exports.issuesHandler = (event) => {
-  //below line for windows - temporary
-  //event.payload = JSON.parse(event.payload.payload)
   if (event.payload.action !== 'opened') return;
 
   (async () => {
     const labels = await addIssueLabel(event.payload);
-    if(labels.includes("bug")){
-      // console.log('bug detected');
+    if (labels.includes('bug')) {
       await sendLabelsToSlack(event.payload);
     }
   })();

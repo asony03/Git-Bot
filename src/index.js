@@ -22,7 +22,7 @@ const app = express();
 const port = 8090;
 const eventEmitter = new events.EventEmitter();
 
-app.use(bodyParser.json({ verify: rawBodySaver }));     // whichever is matched first will be applied.
+app.use(bodyParser.json({ verify: rawBodySaver }));
 app.use(bodyParser.urlencoded({ extended: false, verify: rawBodySaver }));
 app.use(bodyParser.raw({ verify: rawBodySaver, type: function () { return true } }));
 
@@ -49,9 +49,10 @@ app.post('/webhook', (req, res) => {
     }
   }
   const event = req.headers['x-github-event'];
+  // console.log(req.body);
   const emitData = {
     event,
-    payload: req.body,      // body parser will json parse ad populate the req.body
+    payload: JSON.parse(req.body.payload),
     protocol: req.protocol,
     host: req.headers.host,
     url: req.url,
@@ -62,18 +63,19 @@ app.post('/webhook', (req, res) => {
 
 app.post('/slack', (req, res) => {
   res.status(200).send();
-  let payload = req.body;     // body parser will json parse ad populate the req.body
-  //below line for windows - temporary
-  //payload = JSON.parse(payload.payload)
-  //console.log(payload )
+  const payload = req.body;
+  // body parser will json parse ad populate the req.body
+  // below line for windows - temporary
+  // payload = JSON.parse(payload.payload)
+  // console.log(payload )
   const actionType = payload.actions[0].type;
   let val;
   let selectedOption;
-  if(actionType === 'button')
-      val = JSON.parse(payload.actions[0].value);
-  else if(actionType === 'static_select'){
-      val = JSON.parse(payload.actions[0].action_id);
-      selectedOption =  payload.actions[0].selected_option;
+  if (actionType === 'button') {
+    val = JSON.parse(payload.actions[0].value);
+  } else if (actionType === 'static_select') {
+    val = JSON.parse(payload.actions[0].action_id);
+    selectedOption = payload.actions[0].selected_option;
   }
   const { event } = val;
   const emitData = {
@@ -82,8 +84,8 @@ app.post('/slack', (req, res) => {
     user: payload.user,
     channel: payload.channel,
     response_url: payload.response_url,
-    message : payload.message,
-    selectedOption :selectedOption,
+    message: payload.message,
+    selectedOption,
   };
   eventEmitter.emit(event, emitData);
 });

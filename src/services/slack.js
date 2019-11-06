@@ -69,5 +69,3 @@ exports.updateSlackMessage = async (payload,message) => {
     });
   });
 };
-
-
