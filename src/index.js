@@ -63,7 +63,7 @@ app.post('/webhook', (req, res) => {
 
 app.post('/slack', (req, res) => {
   res.status(200).send();
-  const payload = req.body;
+  const payload = JSON.parse(req.body.payload);
   // body parser will json parse ad populate the req.body
   // below line for windows - temporary
   // payload = JSON.parse(payload.payload)
