@@ -13,52 +13,34 @@
 **Tasks completed before these 2 sprints:**
 
 - Github Integration : Implement event listeners 
-
 - Slack Integration
-
 - API's for handling close/delete Issues and PRs
-
 - Bot skeleton setup
-
 - Github OAuth Integration
-
 - Programatically generate github events for the repository
-
 - DB Integration
-
 - Generate mocking data
-
 - Create mocking infrastructure / Unit Tests
-
 - Selenium tests- create / comment on issue
-
 - Selenium tests- create / comment on pull requests
-
 
 **Sprint tasks:**
 
+#### Amal
 - Story(3) API for toxicity Detection 
-
-- Story(3) End to end flow for users to add/delete repositories monitored by the bot
-
-- Story(2) Update the Issue with the priority assigned from slack and update the slack message with a confirmation 
-
-- Story(3) Add Event handlers for review comments.
-
-- Story(2) Create additional APIs required to handle the end to end flow of adding/deleting repositories monitored by the bot 
-
-- Story(2) Add integration with Slack - Post on slack if bug is detected and allow user to assign Priority from slack 
-
-- Story(2) Delete toxic comment once user click on delete comment on slack and update the message with a confirmation
-
-- Story(3) Manage and Update Scrum and project board
-
 - Story(3) Add tests for new functionalities
 
+#### Siddu
+- Story(3) End to end flow for users to add/delete repositories monitored by the bot
+- Story(3) Create additional APIs required to handle the end to end flow of adding/deleting repositories monitored by the bot
+
+#### Sharique
+- Story(2) Update the Issue with the priority assigned from slack and update the slack message with a confirmation 
+- Story(2) Add integration with Slack - Post on slack if bug is detected and allow user to assign Priority from slack 
+- Story(2) Delete toxic comment once user click on delete comment on slack and update the message with a confirmation
+
+#### Harsh
 - Story(5) Download issues data from Github archive and train the model
-
-- Story(5) Deploying the bot on AWS
-
 - Task(1) API for issue labelling
 
 
@@ -68,6 +50,7 @@
 
 - Scrum meetups for every 3 days (4 meetups in total)
 - Daily status updates via Slack channel
+- 3 story points to be done by each member in each sprint
                   
 
 ## Sprint planning:
@@ -89,20 +72,14 @@ The Sprint Review was equivalent to a user acceptance test where each team membe
 **What went well in 2 sprints (top 4 points):**
 
 - Improved understanding of agile processes
-
 - PR review process
-
 - Coordination among team members facilitated by daily status updates
-
 - Even distribution of workload
-
 
 **What can be improved(top 2 points):**
 
 - Backlog grooming needs to be improved
-
 - Some stories were too big. We should have split them into smaller stories.
-
 
 ## Meeting Notes:
 
