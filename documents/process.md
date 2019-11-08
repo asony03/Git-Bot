@@ -1,6 +1,6 @@
 # Practices:
 
-**- Development strategy:** Every feature should be developed and committed to a separate feature branch. The PRs should be approved by atleast 2 team members before merging the feature branch to master.
+**Development strategy:** Every feature should be developed and committed to a separate feature branch. The PRs should be approved by atleast 2 team members before merging the feature branch to master.
 
 **Scurm masters rotation strategy:** 2 team members were acting as scrum masters per sprint on a rotational basis
 
@@ -81,7 +81,7 @@ Most important step before we started working on the backlogs. we identified all
 
 ## Sprint review:
 
-The Sprint Review was equivalent to a user acceptance test where each team member demonstrates the results of the work they have done in the sprint. At the end of sprint 2he TA and before our demo with t, we thoroughly tested the end to end flow of our application.
+The Sprint Review was equivalent to a user acceptance test where each team member demonstrates the results of the work they have done in the sprint. At the end of sprint 2 and before our demo with the TA, we thoroughly tested the end to end flow of our application.
 
 
 ## Sprint retrospective - A meeting to review the process and team working:
