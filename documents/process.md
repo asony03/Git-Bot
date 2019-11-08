@@ -1,12 +1,14 @@
 # Practices:
 
-**Development strategy:** Every feature should be developed and committed to a separate feature branch. The PRs should be approved by atleast 2 team members before merging the feature branch to master.
+## Core and Corollary practices/strategies:
+
+**Development strategy:** Every feature should be developed and committed to a separate feature branch. The PRs should be approved by atleast 2 team members before merging the feature branch to master
 
 **Scurm masters rotation strategy:** 2 team members were acting as scrum masters per sprint on a rotational basis
 
-**Don’t separate testing and development:** Blend of TDD and BDD to maintain a balance between testing and development.
+**Don’t separate testing and development:** Blend of TDD and BDD to maintain a balance between testing and development
 
-**Task prioritization strategy - MoSCoW model:** MOSCOW statnds for Must haves, Should haves, Could haves and Won’t haves. Four main categories to break down our stories by priority.
+**Task prioritization strategy - MOSCOW model:** Statnds for Must haves, Should haves, Could haves and Won’t haves. Four main categories to break down our stories by priority
 
 ## Tasks Rundown:
 
@@ -24,7 +26,7 @@
 - Selenium tests- create / comment on issue
 - Selenium tests- create / comment on pull requests
 
-**Sprint tasks:**
+### Sprint tasks:
 
 #### Amal
 - Story(3) API for toxicity Detection 
@@ -53,21 +55,21 @@
 - 3 story points to be done by each member in each sprint
                   
 
-## Sprint planning:
+## Sprint Planning:
 
-Most important step before we started working on the backlogs. we identified all the product backlog items for 2 sprints and discussed our initial plan for completing these product backlog items based on MOSCOW strategy.
+Most important step before we started working on the backlogs. we identified all the product backlog items for 2 sprints and discussed our initial plan for completing these product backlog items based on MOSCOW strategy
 
 **Spring planning outcomes:**
-- *The sprint goal:* Summary of what we plan to accomplish in 2 weeks.
-- *The sprint backlog:* The list of stories and other product backlog items the team has agreed to work on in 2 weeks.
+- *The sprint goal:* Summary of what we plan to accomplish in 2 weeks
+- *The sprint backlog:* The list of stories and other product backlog items the team has agreed to work on in 2 weeks
 
 
-## Sprint review:
+## Sprint Review:
 
-The Sprint Review was equivalent to a user acceptance test where each team member demonstrates the results of the work they have done in the sprint. At the end of sprint 2 and before our demo with the TA, we thoroughly tested the end to end flow of our application.
+The Sprint Review was equivalent to a user acceptance test where each team member demonstrates the results of the work they have done in the sprint. At the end of sprint 2 and before our demo with the TA, we thoroughly tested the end to end flow of our application
 
 
-## Sprint retrospective - A meeting to review the process and team working:
+## Sprint Retrospective - A meeting to review the process and team working:
 
 **What went well in 2 sprints (top 4 points):**
 
@@ -82,8 +84,11 @@ The Sprint Review was equivalent to a user acceptance test where each team membe
 - Some stories were too big. We should have split them into smaller stories.
 
 ## Meeting Notes:
+### Scrum meeting on October 30:
+![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/MM1.PNG)
 
-**TODO**
+### Scrum meeting on November 5:
+![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/MM2.PNG)
 
 
 # Iteration 1 (Wed Oct 23 -- Fri Nov 1)
