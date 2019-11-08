@@ -2,7 +2,7 @@
 
 ## Core and Corollary practices/strategies:
 
-**Development strategy:** Every feature should be developed and committed to a separate feature branch. The PRs should be approved by atleast 2 team members before merging the feature branch to master
+**Development strategy:** Every feature should be developed and committed to a separate feature branch. The PRs should be approved by atleast 1 member (2 for major changes) before merging the feature branch to master.
 
 **Scurm masters rotation strategy:** 2 team members were acting as scrum masters per sprint on a rotational basis
 
@@ -91,9 +91,7 @@ The Sprint Review was equivalent to a user acceptance test where each team membe
 ![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/MM2.PNG)
 
 
-# Iteration 1 (Wed Oct 23 -- Fri Nov 1)
-
-## Kanban board
+## Iteration 1 (Wed Oct 23 -- Fri Nov 1)
 ### Start
 ![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Iteration-1-start.png)
 
@@ -101,12 +99,14 @@ The Sprint Review was equivalent to a user acceptance test where each team membe
 ![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Iteration-1-end.png)
 
 
-# Iteration 2 (Sat Nov 2 -- Fri Nov 8th)
-
-## Kanban board
+## Iteration 2 (Sat Nov 2 -- Fri Nov 8th)
 ### Start
 ![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Iteration-2-start.png)
 ### End
 ![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Iteration-2-end.png)
 ![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/Iteration-2-end-2.png)
 
+
+## Proofs for strategy
+![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/approvals-1.png)
+![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/approvals-2.png)
