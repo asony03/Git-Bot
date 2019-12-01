@@ -1,13 +1,17 @@
 # Acceptance tests:
 
-TA Account Details :
+## TA Account Details :
+
+### GitHub:
   
-  GitHub Account : TA_CSC510
-  GitHub Password: Pa$$word@1234
+  * GitHub Username : TA_CSC510
+  * GitHub Password: Pa$$word@1234
   
-  Slack WorkSpace: csc510ncsu.slack.com
-  Slack UserName : ta.csc510ncsu@gmail.com
-  Slack Password : Pa$$word@1234
+### Slack:
+
+  * Slack WorkSpace: csc510ncsu.slack.com
+  * Slack Username : ta.csc510ncsu@gmail.com
+  * Slack Password : Pa$$word@1234
 
 ## How to add your repositories to the monitoring list of GitBot?
 
