@@ -1,5 +1,18 @@
 # Acceptance tests:
 
+## How to add your repositories to the monitoring list of GitBot?:
+
+1. Access the application using its URL.
+
+2. Authorize the GitBot
+
+3. Select your repositories to be monitored by GitBot and submit (follow the same steps to update your list at any time later)
+
+
+## Git tasks:
+
+
+
 | Test Case | Scenario |Current State<br>(Preconditions) |     Actions   | Expected Result |
 | ----------| -------- | ------------------------------- | ------------- | --------------- |
 | Label GitHub Issues - **Non-Buggy case** | As a user, when I create a new issue in my repo, the issue should be appropriately labelled with one of the default labels provided by GitHub | <br>**The user has already added his/her repository to the monitoring list of GitBot** <br> <br><ol> <li>Webhooks for new issues is set in the repo </li><li>The bot is added as a collaborator in the repo</li> <li> Bot is listening to incoming events from GitHub repo </li></ol>| User creates an issue without labels | The issue should be appropriately labelled by GitBot |
