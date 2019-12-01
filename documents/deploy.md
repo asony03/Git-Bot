@@ -1,17 +1,25 @@
 # Acceptance tests:
 
-## How to add your repositories to the monitoring list of GitBot?:
+TA Account Details :
+  
+  GitHub Account : TA_CSC510
+  GitHub Password: Pa$$word@1234
+  
+  Slack WorkSpace: csc510ncsu.slack.com
+  Slack UserName : ta.csc510ncsu@gmail.com
+  Slack Password : Pa$$word@1234
 
-1. Access the application using its URL.
+## How to add your repositories to the monitoring list of GitBot?
 
-2. Authorize the GitBot
+1. Access the application using its URL. (Hosted Url : -- todo)
 
-3. Select your repositories to be monitored by GitBot and submit (follow the same steps to update your list at any time later)
+2. Authorize the GitBot for the given TA Github Account.
 
+3. Select the repositories to be monitored by GitBot and submit (follow the same steps to update your list at any time later)
+
+4. Slack Bot is already installed in the provided account. Use the given slack credentials to login to the registered workspace and monitor your repositories. 
 
 ## Git tasks:
-
-
 
 | Test Case | Scenario |Current State<br>(Preconditions) |     Actions   | Expected Result |
 | ----------| -------- | ------------------------------- | ------------- | --------------- |
