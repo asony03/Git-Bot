@@ -17,7 +17,7 @@
 
 ### GitHub:
   
-  * GitHub Username : TA_CSC510
+  * GitHub Username : TA-CSC510
   * GitHub Password: Pa$$word@1234
   
 ### Slack:
@@ -28,7 +28,7 @@
 
 ## How to add your repositories to the monitoring list of GitBot?
 
-1. Access the application using its URL. (Hosted Url : -- todo)
+1. Access the application using http://104.154.104.63:8090
 
 2. Authorize the GitBot for the given TA Github Account.
 
