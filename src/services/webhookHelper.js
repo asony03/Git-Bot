@@ -17,7 +17,8 @@ exports.createWebHook = async (user, repo, accessToken) => new Promise((resolve,
         'pull_request_review_comment',
       ],
       config: {
-        url: 'http://localhost:8090/webhook',
+	url: process.env.CREATE_WEBHOOK_URL,
+	secret: process.env.GITHUB_WEBHOOK_SECRET,
         content_type: 'json',
         insecure_ssl: '0',
       },
@@ -88,7 +89,7 @@ exports.deleteWebHook = (user, repo, accessToken) => new Promise((resolve, rejec
 // add bot as a collaborator
 exports.addCollaborator = async (user, repo, accessToken) => new Promise((resolve, reject) => {
   request
-    .put(`https://api.github.com/repos/${user}/${repo}/collaborators/Git-Bot-Luna`)
+    .put(`https://api.github.com/repos/${user}/${repo}/collaborators/luna-gitbot`)
     .send({
       permission: 'admin'
     })
@@ -108,7 +109,7 @@ exports.addCollaborator = async (user, repo, accessToken) => new Promise((resolv
 // delete bot as a collaborator
 exports.deleteCollaborator = async (user, repo, accessToken) => new Promise((resolve, reject) => {
   request
-    .del(`https://api.github.com/repos/${user}/${repo}/collaborators/Git-Bot-Luna`)
+    .del(`https://api.github.com/repos/${user}/${repo}/collaborators/luna-gitbot`)
     .set('Authorization', `token ${accessToken}`)
     .set('Cache-Control', 'no-cache')
     .set('Accept', 'application/json')
