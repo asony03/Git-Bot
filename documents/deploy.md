@@ -9,7 +9,7 @@
   * Set up roles: `ansible-playbook roles.yml`
   * Run playbook: `ansible-playbook main.yml -i inventory`
 
-## ScreenCast
+## [Screen Cast](https://youtu.be/NjuAmRVE4Ws) Link
   
 # Acceptance tests:
 
