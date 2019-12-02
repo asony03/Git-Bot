@@ -1,3 +1,16 @@
+# Deployment Steps:
+
+## Pre-Requisite:
+
+  * Create a Virtual Machine/ Hosted environment with Ansible installed.
+  * Copy the files from Drive to the machine
+
+## Run the following command to deploy the application on the machine:
+  * Set up roles: `ansible-playbook roles.yml`
+  * Run playbook: `ansible-playbook main.yml -i inventory`
+
+## ScreenCast
+  
 # Acceptance tests:
 
 ## TA Account Details :
