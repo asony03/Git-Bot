@@ -46,3 +46,9 @@
 | Handle comments in issues and/or pull requests - **Non-Toxic case** | As a repo user, when I post a non-toxic comment on an issue and/or pull request, it should pass bot's toxicity test and remain as it is with its issue/pull request | The admin has already added his/her repository to the monitoring list of GitBot, and has also given access to his/her slack channel | Repo user posts a non-toxic comment on an issue and/or pull request | **No Action** |
 | Manage new issues and/or pull requests - **Inappropriate content** |As a repo user, when I create an issue or pull request with inappropriate/offensive content, it should be tagged as inappropriate | The admin has already added his/her repository to the monitoring list of GitBot | Repo user creates an issue and/or pull request with inappropriate content |  The issue and/or pull request should be tagged as inappropriate |
 | Manage new issues and/or pull requests - **Appropriate content** | As a repo user, when I create an issue or pull request with clean content, it should not be tagged with any labels | The admin has already added his/her repository to the monitoring list of GitBot | Repo user creates an issue and/or pull request with appropriate content | **No Action** | 
+
+## Continuous Integration (CI) Server
+
+### [Code](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/scripts/ContinuousIntegration)
+
+### [Screen Cast](https://youtu.be/BLm7IP7Z3qQ)
