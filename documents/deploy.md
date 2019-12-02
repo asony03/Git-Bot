@@ -3,7 +3,7 @@
 ## Pre-Requisite:
 
   * Create a Virtual Machine/ Hosted environment with Ansible installed.
-  * Copy the files from Drive to the machine
+  * Copy the files from [this link](https://drive.google.com/open?id=1IaIA8wShJf1eiwBMgGEB-WK8xIXD1JLj) to the machine
 
 ## Run the following command to deploy the application on the machine:
   * Set up roles: `ansible-playbook roles.yml`
