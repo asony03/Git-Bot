@@ -1,0 +1,15 @@
+name: GitBot
+vm:
+  ip: 192.168.14.14 # give the virtual machine an ip address
+  memory: 2048 # share 2GB of memory with this virtual machine
+  disk: 50000
+  ports:
+    - 8090 # forwards port 8080 of the virtual machine to port 8080 on the host
+tools:
+  - ansible # installs ansible inside the virtual machine
+commands:
+  roles: ansible-playbook roles.yml -i inventory
+  ping: ansible all -m ping -i inventory
+  install: ansible-playbook main.yml -i inventory
+  install2: ansible-playbook main2.yml -i inventory
+  remote: ssh -i Test_rsa vagrant@192.168.14.100
