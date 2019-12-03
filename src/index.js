@@ -52,7 +52,7 @@ app.post('/webhook', (req, res) => {
   // console.log(req.body);
   const emitData = {
     event,
-    payload: JSON.parse(req.body.payload),
+    payload: req.body,
     protocol: req.protocol,
     host: req.headers.host,
     url: req.url,

@@ -1,0 +1,93 @@
+- hosts: all
+  become: yes
+  become_method: sudo
+
+  vars:
+    - git_repository: https://github.ncsu.edu/csc510-fall2019/CSC510-24
+    - node_apps_location: /usr/local/opt/node/app
+
+  pre_tasks:
+    - name: update apt-get cache
+      command: apt-get update
+      become: yes
+
+  roles:
+    - role: geerlingguy.nodejs
+    - role: geerlingguy.git
+    - role: undergreen.mongodb # stone-payments.mongodb
+    - role: andrewrothstein.anaconda
+    - role: andrewrothstein.conda-env
+      conda_env_name: pyapp
+      conda_env_environment: pyapp.yml
+
+  handlers:
+  - name: start mongodb
+    service: name=mongod state=started    
+    
+  tasks:
+    - name: Install NPM
+      apt: name = {{ item }} update_cache=yes state=latest
+      with_items:
+        - npm
+      register: npm_finished
+      
+    - name: Install pm2
+      npm: 
+        name: pm2 
+        global: yes 
+        state: present
+      
+    - name: Clone git repository
+      git:
+        repo: "{{ git_repository }}"
+        dest: "{{ node_apps_location }}"
+      register: git_finished
+      
+    - name: Ensure Node.js app folder exists.
+      file: "path={{ node_apps_location }} state=directory"
+      register: app_exists
+
+    - name: Create directory
+      file:
+        path: "{{ node_apps_location }}/model/pickles"
+        state: directory
+      
+    - name: Copy files to server
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      with_items:
+        - {src: '.env',dest: "{{ node_apps_location }}"}
+        - {src: 'Issue_Label_v1_best_model.hdf5',dest: "{{ node_apps_location }}/model"}
+        - {src: 'issues_labeller.tar',dest: "{{ node_apps_location }}/model/pickles"}
+      register : copy_finished
+
+    - name: Unarchive issues_labeller.tar
+      unarchive:
+        src: "{{node_apps_location}}/model/pickles/issues_labeller.tar"
+        dest: "{{node_apps_location}}/model/pickles/"
+
+    - name: Delete issues_labeller.tar
+      file:
+        path: "{{node_apps_location}}/model/pickles/issues_labeller.tar"
+        state: absent
+
+    - name : Install npm packages
+      npm:
+        path: "{{ node_apps_location }}"
+        executable: /usr/bin/npm --unsafe-perm=true --allow-root
+      register: npm_packages_finished
+      
+    - name: Check list of running apps
+      command: pm2 ls
+      register: pm2_list
+      changed_when: false
+
+    - name: Start Node app
+      command: "pm2 start -f {{ node_apps_location }}/src/index.js"
+      when: "pm2_list.stdout.find(node_apps_location + '/src/index.js') == -1"
+
+    - name: Start the flask server
+      shell: 'source /usr/local/anaconda/bin/activate pyapp && cd {{node_apps_location}}/flask_app && pm2 start -f app.py'
+      args:
+        executable: /bin/bash

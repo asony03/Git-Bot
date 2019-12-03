@@ -1,0 +1,14 @@
+- hosts: localhost
+  tasks:
+    # file module breaks when localhost
+    - name: ensure roles dir exists
+      command: mkdir -p /etc/ansible/roles
+
+    - name: install roles
+      command: ansible-galaxy install --force --roles-path /etc/ansible/roles {{item}}
+      with_items:
+        - geerlingguy.nodejs
+        - geerlingguy.git
+        - undergreen.mongodb
+        - andrewrothstein.anaconda
+        - andrewrothstein.conda-env

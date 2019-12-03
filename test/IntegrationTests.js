@@ -15,8 +15,8 @@ const githubLoginLink = 'https://github.com/login';
 const userName = process.env.GITHUB_USER_NAME;
 const password = process.env.GITHUB_PASSWORD;
 const repository = 'GitBot-Test';
-const issueName = 'GitBot-Test-Issue' + Date.now();
-const issueComment = 'GitBot-Test-Comment' + Date.now();
+const issueName = 'Damn It Issue ' + Date.now();
+const issueComment = 'Damn It Comment ' + Date.now();
 
 const issueNonToxicName = 'GitBot-Test-Issue-Non-Toxic' + Date.now();
 const issueNonToxicComment = 'GitBot-Test-Non-Toxic-Comment' + Date.now();
@@ -29,8 +29,8 @@ const slackChannel = process.env.SLACK_CHANNEL;
 
 const gitBranchName = 'GitBot-Test-Branch' + Date.now();
 const gitFileName = 'GitBot-Test-File' + Date.now();
-const gitPullRequestName = 'GitBot-Test-Pull-Request' + Date.now();
-const gitPullRequestComment = 'GitBot-Test-Pull-Request-Comment' + Date.now();
+const gitPullRequestName = 'Damn It Pull-Request' + Date.now();
+const gitPullRequestComment = 'Damn It Pull-Request-Comment' + Date.now();
 
 
 const chromeCapabilities = webdriver.Capabilities.chrome();
