@@ -21,6 +21,7 @@ Design | [design.md](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/mast
 Bot | [bot.md](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/documents/bot.md)
 Process | [process.md](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/documents/process.md)
 Deploy | [deploy.md](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/documents/deploy.md)
+Report | [report.md](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/documents/report.md)
 
 ## Worksheet
 [Worksheet](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/documents/worksheet.md)
