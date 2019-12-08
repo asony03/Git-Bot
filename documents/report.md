@@ -13,24 +13,26 @@ Github is one of the most popular source control and project management website 
 
 ## Primary features and screenshots:
 
-Gitbot provides 4 major use cases:
-* Automatically label new issues and PRs 
+### Gitbot provides 4 major use cases:
+#### Automatically label new issues and PRs 
 
 ![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/question.png)
 ![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/bug.png)
 ![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/feature_request.png)
 ![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/pr_label.png)
 
-* If a "bug" is detected, send an alert in slack channel with the option to prioritize the issue
+#### If a "bug" is detected, send an alert in slack channel with the option to prioritize the issue
 
 ![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/slack_bug.png)
 ![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/slack_bug_prio.png)
 
-* Monitor issues and PRs for toxic content and label them "inappropriate" if anything is detected
-* Monitor comments in issues and PR and send an alert when toxicity is detected with an option to delete the comment
+#### Monitor comments in issues and PR and send an alert when toxicity is detected with an option to delete the comment
 
 ![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/slack_toxic_comment.png)
 ![](https://github.ncsu.edu/csc510-fall2019/CSC510-24/blob/master/images/slack_toxic_delete.png)
+
+
+#### Monitor issues and PRs for toxic content and label them "inappropriate" if anything is detected
 
 ## Reflection:
 
@@ -48,6 +50,6 @@ Gitbot provides 4 major use cases:
 Here is the list of enchancements we can do:
 
 - For our appliaction to run currently, A user needs to create a bot in their slack channel and point it to our server. This can be mitigated if we can publish an app in slack marketplace which can then be installed by the users in their slack channel.
-- Similarly we are using a github user account to act as a bot. When a user starts monitoring his repository we add this bot account as a collaborator in his repo. This is not feasible in large scale and is also a security risk in case the bot account gets compromised. this can be avoided by publishing an app in github marketplace which can then be installed by users in their respective repositories.
-- We are currently running 2 independent servers (Node.js and Python) inside our machine, which communicate with each other for issue classification task. Instead of running the 2nd Python server we can user services such as Google Auto ML or AWS Sagemaker/Lambda to host the ML model. This will help us ease out the depolyment process and remove the coupling between the 2 servers.
+- Current implementation uses "OAuth Apps" approach for GitHub integration and adds bot's GitHub user account as a collaborator in user's repository to enable bot monitoring. This is not feasible in large scale and is also a security risk in case the bot account gets compromised. This can be avoided by changing our OAuth App to a GitHub App and hosting it in github marketplace. This will allow the users to directly install our app in their respective repositories.
+- We are currently running 2 independent servers (Node.js and Python) inside our machine, which communicate with each other for issue classification task. Instead of running the 2nd Python server we can use services such as Google Auto ML or AWS Sagemaker/Lambda to host the ML model. This will help us ease out the depolyment process and remove the coupling between the 2 servers.
 - There is also scope of collecting feedback from the users regarding the ML results and use them to further improve our model using reinforcement learning. This can be done by making the user assign an emoji to the comment when the bot labels an issue and storing it in a DB. Every once in a while we can use this data to re-train and deploy the model. This way our bot will improve as more and more users start using it.
