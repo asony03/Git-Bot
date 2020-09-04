@@ -28,7 +28,7 @@
     "express": "^4.17.1",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
-    "mongodb": "^2.2.5",
+    "mongodb": "^3.6.1",
     "nock": "^11.4.0",
     "request": "^2.88.0",
     "selenium-webdriver": "^4.0.0-alpha.5",
